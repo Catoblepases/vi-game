@@ -1,6 +1,8 @@
-import { CONST } from '../const/const';
+import { CONST } from "../const/const";
+import { Player } from "../objects/Player";
+import { Reader } from "../utils/reader";
 
-export class GameScene extends Phaser.Scene {
+export class GameScene extends Reader {
   // field and game setting
 
   private gameHeight: number;
@@ -12,20 +14,18 @@ export class GameScene extends Phaser.Scene {
   private tick: number;
 
   // objects
-  private player: any;
-  private apple: any;
+  private player: Player;
   private gameBorder: Phaser.GameObjects.Graphics[];
 
   // texts
   private scoreText: Phaser.GameObjects.BitmapText;
 
   constructor() {
-    super({
-      key: 'GameScene'
-    });
+    super([], "GameScene");
   }
 
   init(): void {
+    super.init();
     this.gameHeight = this.sys.canvas.height;
     this.gameWidth = this.sys.canvas.width;
     this.boardWidth = this.gameWidth - 2 * CONST.FIELD_SIZE;
@@ -40,6 +40,7 @@ export class GameScene extends Phaser.Scene {
     this.gameBorder = [];
   }
 
-  update(time: number): void {
+  update(): void {
+    super.update();
   }
 }

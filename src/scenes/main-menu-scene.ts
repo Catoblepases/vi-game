@@ -1,16 +1,15 @@
 import { CONST } from "../const/const";
+import { Reader } from "../utils/reader";
 
-export class MainMenuScene extends Phaser.Scene {
+export class MainMenuScene extends Reader {
   private startKey: Phaser.Input.Keyboard.Key;
   private bitmapTexts: Phaser.GameObjects.BitmapText[] = [];
-
   constructor() {
-    super({
-      key: "MainMenuScene",
-    });
+    super(["new Game", "continue", "quit"], "MainMenuScene");
   }
 
   init(): void {
+    super.init();
     this.startKey = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.S
     );
@@ -35,30 +34,33 @@ export class MainMenuScene extends Phaser.Scene {
       )
     );
 
-    this.bitmapTexts.push(
-      this.add.bitmapText(
-        this.sys.canvas.width / 2 - 30,
-        this.sys.canvas.height / 2 - 10,
-        "sysFont",
-        "N: NEW GAME",
-        8
-      )
-    );
+    var initHPos = this.sys.canvas.height / 2 - 10;
+    var distanceChoice =
+      (this.sys.canvas.height - initHPos - 10) / this.choices.length;
 
-    this.bitmapTexts.push(
-      this.add.bitmapText(
-        this.sys.canvas.width / 2 - 30,
-        this.sys.canvas.height / 2 + 30,
-        "sysFont",
-        "C: CONTINUE",
-        8
-      )
-    );
+    for (let i = 0; i < this.choices.length; i++) {
+      this.bitmapTexts.push(
+        this.add.bitmapText(
+          this.sys.canvas.width / 2 - 30,
+          initHPos + distanceChoice * i,
+          "sysFont",
+          this.choices[i],
+          8
+        )
+      );
+    }
   }
 
   update(): void {
-    if (this.startKey.isDown) {
-      this.scene.start("GameScene");
+    super.update();
+    if (Phaser.Input.Keyboard.JustDown(this.confirmKey)) {
+      switch (this.currentChoice) {
+        case 0:
+          this.scene.start("GameScene");
+          break;
+        default:
+          break;
+      }
     }
   }
 }
