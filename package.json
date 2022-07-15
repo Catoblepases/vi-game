@@ -16,19 +16,21 @@
     "phaser": "3.55.2"
   },
   "scripts": {
-    "dev": "webpack --mode development && webpack serve --mode development"
+    "dev": "webpack --mode development && webpack serve --mode development",
+    "start": "webpack --mode development && webpack serve --mode development"
   },
+
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/digitsensitive/phaser3-typescript.git"
+    "url": "git+https://github.com/Catoblepases/vi-game.git"
   },
   "author": {
-    "name": "digitsensitive",
-    "email": "digit.sensitivee@gmail.com"
+    "name": "catoblepases",
+    "email": "nonpointsfr@gmail.com"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/digitsensitive/phaser3-typescript/issues"
+    "url": "https://github.com/Catoblepases/vi-game/issues"
   },
-  "homepage": "https://github.com/digitsensitive/phaser3-typescript#readme"
+  "homepage": "https://github.com/Catoblepases/vi-game#readme"
 }
