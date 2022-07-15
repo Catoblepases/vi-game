@@ -1,13 +1,10 @@
-# phaser3template
-heroku deployabe webpacked phaser3 template with socket.io and type checking
+# game for blind people
+phaser.js+howler.js
 
-This template allows you to easily deploy a phaser3 game with websocket support.
-I intend to use this project for multiplayer games and for games that track data (heroku database) for individual players over time. To get started, adjust /src/frontend/main.ts to configure your game and import scenes. Then, add your scenes to the ./scenes folder. For multiplayer, socket coommunicatioon shouold be added to the /src/backend/GameCommunication.ts
-
+On some unknown land, The more powerful the magic the worse the vision will be, the most powerful magician can not see the physical world. But after a certain day, the devil took away the magical power of the magicians, magic suddenly disappeared from this land, no one remembered that magic had ever blessed this land, and the magicians all became ordinary people with visual impairment. In this background, our story begins...
 
 
-
-## it's running at http://phaser3template.herokuapp.com
+## it's running at https://agile-peak-94217.herokuapp.com/
 If no one is on, it takes a few seconds for the free server to spin up. The demo shows a new square per user and sync the location of all users. No player controls yet. 
 ##  -----------to compile and run---------------------
 npm run build-front<br />
