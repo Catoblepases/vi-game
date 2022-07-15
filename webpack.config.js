@@ -1,5 +1,5 @@
 const path = require("path");
-var CopyWebpackPlugin = require("copy-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   entry: "./src/game.ts",
@@ -21,11 +21,7 @@ module.exports = {
       },
     ],
   },
-  plugins: [
-    new CopyWebpackPlugin([{ from: "./index.html" }]),
-    new CopyWebpackPlugin([{ from: "./assets", to: "assets" }]),
-  ],
-  
+
   devServer: {
     contentBase: path.resolve(__dirname, "./"),
     publicPath: "/dist/",
