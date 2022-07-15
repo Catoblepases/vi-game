@@ -1,5 +1,14 @@
 import { CONST } from "../const/const";
 
+export function speak(msg: string) {
+  let ssu = new window.SpeechSynthesisUtterance();
+  ssu.voice = window.speechSynthesis.getVoices()[1];
+  ssu.lang = "en-US";
+  ssu.rate = 1.5;
+  ssu.text = msg;
+  window.speechSynthesis.speak(ssu);
+}
+
 export class Reader extends Phaser.Scene {
   protected repeatKey: Phaser.Input.Keyboard.Key;
   protected upKey: Phaser.Input.Keyboard.Key;
@@ -8,8 +17,11 @@ export class Reader extends Phaser.Scene {
   protected helpKey: Phaser.Input.Keyboard.Key;
   protected choices: string[];
   protected currentChoice: number;
+  protected bitmapTexts: Phaser.GameObjects.BitmapText[] = [];
   protected helpText: string =
-    "Press the key to go to the next menu item, press the up key to go to the previous menu item, press r to repeat the text of the menu item, and press h to repeat this instruction document.";
+    "Press the key to go to the next menu item, " +
+    "press the up key to go to the previous menu item, " +
+    "press r to repeat the text of the menu item, and press h to repeat this instruction document.";
 
   constructor(choices: string[], name: string) {
     super({
@@ -18,15 +30,7 @@ export class Reader extends Phaser.Scene {
     this.choices = choices;
   }
 
-  speak(msg: string) {
-    let ssu = new window.SpeechSynthesisUtterance();
-    ssu.voice = window.speechSynthesis.getVoices()[1];
-    ssu.lang = "en-US";
-    ssu.text = msg;
-    window.speechSynthesis.speak(ssu);
-  }
-
-  init() {
+  init(data: any) {
     this.repeatKey = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.R
     );
@@ -57,14 +61,22 @@ export class Reader extends Phaser.Scene {
   update(): void {
     if (Phaser.Input.Keyboard.JustDown(this.upKey)) {
       this.changeNumber(-1);
-      this.speak(this.choices[this.currentChoice]);
+      speak(this.choices[this.currentChoice]);
     } else if (Phaser.Input.Keyboard.JustDown(this.downKey)) {
       this.changeNumber(1);
-      this.speak(this.choices[this.currentChoice]);
+      speak(this.choices[this.currentChoice]);
     } else if (Phaser.Input.Keyboard.JustDown(this.repeatKey)) {
-      this.speak(this.choices[this.currentChoice]);
+      speak(this.choices[this.currentChoice]);
     } else if (Phaser.Input.Keyboard.JustDown(this.helpKey)) {
-      this.speak(this.helpText);
+      speak(this.helpText);
     }
+  }
+
+  getChoices(): string[] {
+    return this.choices;
+  }
+
+  addToBitmapTexts(item: Phaser.GameObjects.BitmapText): void {
+    this.bitmapTexts.push(item);
   }
 }
