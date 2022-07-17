@@ -76,7 +76,8 @@ export class HouseScene extends Reader {
       speak(this.player.toString());
     }
     this.scoreText.setText(this.player.toInfoSimple());
-    if (Phaser.Input.Keyboard.JustDown(this.confirmKey)) {
+
+    if (this.isConfirm()) {
       switch (this.currentChoice) {
         case 0:
           this.player.collectEther();
@@ -89,12 +90,13 @@ export class HouseScene extends Reader {
         case 3:
           break;
         case 4:
-          this.scene.stop;
+          this.scene.stop();
           this.scene.start("PolicyScene", { player: this.player });
           break;
         default:
           break;
       }
+      this.unConfirm();
     }
   }
 }

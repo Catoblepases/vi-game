@@ -39,10 +39,7 @@ export class MainMenuScene extends Reader {
 
   update(): void {
     super.update();
-    if (
-      Phaser.Input.Keyboard.JustDown(this.confirmKey) ||
-      (this.swipeDirection == "confirm" && this.eventTriggered)
-    ) {
+    if (this.isConfirm()) {
       console.log(this.currentChoice);
 
       switch (this.currentChoice) {
@@ -56,7 +53,7 @@ export class MainMenuScene extends Reader {
         default:
           break;
       }
-      this.eventTriggered = false;
+      this.unConfirm();
     }
   }
 }

@@ -50,13 +50,15 @@ export class PolicyScene extends Reader {
 
   update(): void {
     super.update();
-    if (Phaser.Input.Keyboard.JustDown(this.confirmKey)) {
+    if (this.isConfirm()) {
       console.log(this.currentChoice);
       var c = this.choices[this.currentChoice];
       this.player.changePolicy(c);
       speak("change policy to " + c);
-      this.scene.start("HouseScene", { player: this.player });
       console.log("start");
+      this.unConfirm();
+      this.scene.stop();
+      this.scene.start("HouseScene", { player: this.player });
     }
   }
 }

@@ -9,26 +9,15 @@ export function speak(msg: string) {
   window.speechSynthesis.speak(ssu);
 }
 
-var directions = ["left", "right", "up", "down"];
-var dumpDirectionStates = function (swipe) {
-  var s = "";
-  var dir;
-  for (var i = 0, cnt = directions.length; i < cnt; i++) {
-    dir = directions[i];
-    if (swipe[dir]) {
-      s += " " + dir;
-    }
-  }
-  return s;
-};
-
 export const helpTextPC: string =
   "Press the key to go to the next menu item, " +
   "press the up key to go to the previous menu item, " +
-  "press r to repeat the text of the menu item, and press h to repeat this instruction document.";
+  "press r to repeat the text of the menu item, and press h Double click";
 
 export const helpTextMobile: string =
-  "Swipe down to the next menu item, swipe up to the next menu item, click on the screen to confirm your selection.";
+  "Swipe down to the next menu item, swipe up to the next menu item, " +
+  "click on the screen to confirm your selection, " +
+  "double click Double click";
 
 export class Reader extends Phaser.Scene {
   [x: string]: any;
@@ -106,6 +95,30 @@ export class Reader extends Phaser.Scene {
     }
   }
 
+  confirmButton() {
+    this.swipeDirection = "confirm";
+    console.log("confirm");
+    this.eventTriggered = true;
+    this.isClicking = false;
+  }
+
+  unConfirm() {
+    this.eventTriggered = false;
+  }
+
+  isConfirm(): boolean {
+    console.log(
+      "isConfirm: " +
+        (this.swipeDirection == "confirm" && this.eventTriggered) ||
+        Phaser.Input.Keyboard.JustDown(this.confirmKey)
+    );
+
+    return (
+      (this.swipeDirection == "confirm" && this.eventTriggered) ||
+      Phaser.Input.Keyboard.JustDown(this.confirmKey)
+    );
+  }
+
   update(): void {
     if (this.tapDurant > 0) {
       this.tapDurant++;
@@ -113,10 +126,7 @@ export class Reader extends Phaser.Scene {
     }
     if (this.tapDurant > 20) {
       if (this.tapTimes == 1) {
-        this.swipeDirection = "confirm";
-        console.log("confirm");
-        this.eventTriggered = true;
-        this.isClicking = false;
+        this.confirmButton();
       } else if (this.tapTimes >= 2) {
         speak(helpTextMobile);
         console.log("help");
@@ -126,31 +136,29 @@ export class Reader extends Phaser.Scene {
     }
 
     // touch and click
+    const distanceY =
+      this.input.activePointer.upY - this.input.activePointer.downY;
     if (
       !this.input.activePointer.isDown &&
       this.isClicking == true &&
       this.eventTriggered == false
     ) {
-      if (
-        Math.abs(
-          this.input.activePointer.upY - this.input.activePointer.downY
-        ) < 10
-      ) {
+      console.log(distanceY);
+
+      if (Math.abs(distanceY) < 30) {
         this.tapTimes++;
         this.tapDurant++;
         console.log("count");
-      } else if (
-        this.input.activePointer.upY < this.input.activePointer.downY
-      ) {
-        this.swipeDirection = "up";
-        console.log("up");
-      } else if (
-        this.input.activePointer.upY > this.input.activePointer.downY
-      ) {
-        this.swipeDirection = "down";
-        console.log("down");
+      } else {
+        if (distanceY < 0) {
+          this.swipeDirection = "up";
+          console.log("up");
+        } else if (distanceY > 0) {
+          this.swipeDirection = "down";
+          console.log("down");
+        }
+        this.eventTriggered = true;
       }
-      this.eventTriggered = true;
       this.isClicking = false;
     } else if (this.input.activePointer.isDown && this.isClicking == false) {
       this.isClicking = true;
