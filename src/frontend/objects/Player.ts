@@ -23,6 +23,7 @@ export class Player {
   private foods: number;
   private policy: string;
 
+  private name: string;
   private residents: number;
 
   constructor() {
@@ -33,12 +34,13 @@ export class Player {
     this.progress = 0;
     this.residents = 0;
     this.policy = Policy.Balance;
+    this.name = "ivy";
   }
 
   newDay() {
     this.time++;
-    // this.ether += policys.get(this.policy)[1] * this.residents;
-    // this.foods += policys.get(this.policy)[0] * this.residents;
+    this.ether += policys.get(this.policy)![1] * this.residents;
+    this.foods += policys.get(this.policy)![0] * this.residents;
   }
 
   changePolicy(p: string) {

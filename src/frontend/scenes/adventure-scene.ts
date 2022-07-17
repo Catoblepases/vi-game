@@ -1,10 +1,11 @@
 import { CONST } from "../const/const";
 import { Player } from "../objects/Player";
 import { createTextAuto } from "../utils/createMenu";
-import { Reader } from "../utils/reader";
+import { Reader, speak } from "../utils/reader";
 
 export class AdventureScene extends Reader {
   private startKey: Phaser.Input.Keyboard.Key;
+
   constructor() {
     super(["new Game", "continue", "quit"], "AdventureScene");
   }

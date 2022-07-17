@@ -4,6 +4,9 @@ import { HouseScene } from "./scenes/house-scene";
 import { MainMenuScene } from "./scenes/main-menu-scene";
 import { AdventureScene } from "./scenes/adventure-scene";
 import { EtherScene } from "./scenes/ether-scene";
+import { Reader } from "./utils/reader";
+import { checkPlatform } from "./utils/check-sys";
+import GesturesPlugin from "phaser3-rex-plugins/plugins/gestures-plugin.js";
 
 export const GameConfig: Phaser.Types.Core.GameConfig = {
   title: "RandomLand",
@@ -11,7 +14,7 @@ export const GameConfig: Phaser.Types.Core.GameConfig = {
   version: "2.0",
   width: 256,
   height: 224,
-  zoom: 3,
+  zoom: 1,
   type: Phaser.AUTO,
   parent: "game",
   scene: [
@@ -21,13 +24,45 @@ export const GameConfig: Phaser.Types.Core.GameConfig = {
     PolicyScene,
     AdventureScene,
     EtherScene,
+    Reader,
   ],
+  plugins: {
+    scene: [
+      {
+        key: "rexGestures",
+        plugin: GesturesPlugin,
+        mapping: "rexGestures",
+      },
+    ],
+  },
   input: {
     keyboard: true,
-    mouse: false,
-    touch: false,
+    mouse: true,
+    touch: true,
     gamepad: false,
   },
   backgroundColor: "#000000",
   render: { pixelArt: true, antialias: false },
 };
+
+export function setGameConfig(): Phaser.Types.Core.GameConfig {
+  var config = GameConfig;
+  const platform = checkPlatform();
+
+  if (platform["isIos"] || platform["isAndroid"] || platform["isIphone"]) {
+    config.height = 667;
+    config.width = 375;
+    config.title = "RANDOMLAND(touch)";
+  } else {
+    if (platform["isIpad"]) {
+      config.title = "RANDOMLAND(touch)";
+    } else {
+      config.title = "RANDOMLAND(pc)";
+    }
+    config.height = 720;
+    config.width = 1280;
+  }
+  console.log(config);
+
+  return config;
+}

@@ -9,19 +9,46 @@ export function speak(msg: string) {
   window.speechSynthesis.speak(ssu);
 }
 
+var directions = ["left", "right", "up", "down"];
+var dumpDirectionStates = function (swipe) {
+  var s = "";
+  var dir;
+  for (var i = 0, cnt = directions.length; i < cnt; i++) {
+    dir = directions[i];
+    if (swipe[dir]) {
+      s += " " + dir;
+    }
+  }
+  return s;
+};
+
+export const helpTextPC: string =
+  "Press the key to go to the next menu item, " +
+  "press the up key to go to the previous menu item, " +
+  "press r to repeat the text of the menu item, and press h to repeat this instruction document.";
+
+export const helpTextMobile: string =
+  "Swipe down to the next menu item, swipe up to the next menu item, click on the screen to confirm your selection.";
+
 export class Reader extends Phaser.Scene {
+  [x: string]: any;
   protected repeatKey: Phaser.Input.Keyboard.Key;
   protected upKey: Phaser.Input.Keyboard.Key;
   protected downKey: Phaser.Input.Keyboard.Key;
   protected confirmKey: Phaser.Input.Keyboard.Key;
   protected helpKey: Phaser.Input.Keyboard.Key;
+
+  protected isClicking = false;
+  protected swipeDirection;
+  protected eventTriggered = false;
+
+  protected confirm = false;
+  protected tapTimes = 0;
+  protected tapDurant = 0;
+
   protected choices: string[];
   protected currentChoice: number;
   protected bitmapTexts: Phaser.GameObjects.BitmapText[] = [];
-  protected helpText: string =
-    "Press the key to go to the next menu item, " +
-    "press the up key to go to the previous menu item, " +
-    "press r to repeat the text of the menu item, and press h to repeat this instruction document.";
 
   constructor(choices: string[], name: string) {
     super({
@@ -45,6 +72,27 @@ export class Reader extends Phaser.Scene {
     this.currentChoice = 0;
   }
 
+  create() {
+    var tap = this.rexGestures.add.tap({
+      enable: true,
+      bounds: undefined,
+
+      time: 250,
+      tapInterval: 200,
+      threshold: 9,
+      tapOffset: 10,
+
+      taps: undefined,
+      minTaps: undefined,
+      maxTaps: undefined,
+    });
+
+    this.rexGestures.add.tap({ taps: 3 }).on("tap", function (tap) {
+      speak(helpTextMobile);
+      console.log("tap 3 times");
+    });
+  }
+
   changeNumber(amount: number) {
     if (
       this.currentChoice + amount < this.choices.length &&
@@ -59,16 +107,74 @@ export class Reader extends Phaser.Scene {
   }
 
   update(): void {
-    if (Phaser.Input.Keyboard.JustDown(this.upKey)) {
+    if (this.tapDurant > 0) {
+      this.tapDurant++;
+      console.log(this.tapDurant);
+    }
+    if (this.tapDurant > 20) {
+      if (this.tapTimes == 1) {
+        this.swipeDirection = "confirm";
+        console.log("confirm");
+        this.eventTriggered = true;
+        this.isClicking = false;
+      } else if (this.tapTimes >= 2) {
+        speak(helpTextMobile);
+        console.log("help");
+      }
+      this.tapTimes = 0;
+      this.tapDurant = 0;
+    }
+
+    // touch and click
+    if (
+      !this.input.activePointer.isDown &&
+      this.isClicking == true &&
+      this.eventTriggered == false
+    ) {
+      if (
+        Math.abs(
+          this.input.activePointer.upY - this.input.activePointer.downY
+        ) < 10
+      ) {
+        this.tapTimes++;
+        this.tapDurant++;
+        console.log("count");
+      } else if (
+        this.input.activePointer.upY < this.input.activePointer.downY
+      ) {
+        this.swipeDirection = "up";
+        console.log("up");
+      } else if (
+        this.input.activePointer.upY > this.input.activePointer.downY
+      ) {
+        this.swipeDirection = "down";
+        console.log("down");
+      }
+      this.eventTriggered = true;
+      this.isClicking = false;
+    } else if (this.input.activePointer.isDown && this.isClicking == false) {
+      this.isClicking = true;
+    }
+
+    // keyboard
+    if (
+      Phaser.Input.Keyboard.JustDown(this.upKey) ||
+      (this.eventTriggered && this.swipeDirection == "up")
+    ) {
       this.changeNumber(-1);
       speak(this.choices[this.currentChoice]);
-    } else if (Phaser.Input.Keyboard.JustDown(this.downKey)) {
+      this.eventTriggered = false;
+    } else if (
+      Phaser.Input.Keyboard.JustDown(this.downKey) ||
+      (this.eventTriggered && this.swipeDirection == "down")
+    ) {
       this.changeNumber(1);
       speak(this.choices[this.currentChoice]);
+      this.eventTriggered = false;
     } else if (Phaser.Input.Keyboard.JustDown(this.repeatKey)) {
       speak(this.choices[this.currentChoice]);
     } else if (Phaser.Input.Keyboard.JustDown(this.helpKey)) {
-      speak(this.helpText);
+      speak(helpTextPC);
     }
   }
 
@@ -78,5 +184,9 @@ export class Reader extends Phaser.Scene {
 
   addToBitmapTexts(item: Phaser.GameObjects.BitmapText): void {
     this.bitmapTexts.push(item);
+  }
+
+  addToChoices(item: string): void {
+    this.choices.push(item);
   }
 }
