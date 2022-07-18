@@ -39,7 +39,7 @@ export class EtherScene extends Reader {
 
   update(): void {
     super.update();
-    if (Phaser.Input.Keyboard.JustDown(this.confirmKey)) {
+    if (this.isConfirm()) {
       console.log(this.currentChoice);
 
       switch (this.currentChoice) {
@@ -53,6 +53,7 @@ export class EtherScene extends Reader {
         default:
           break;
       }
+      this.unConfirm();
     }
   }
 }

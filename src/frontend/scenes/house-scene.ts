@@ -10,13 +10,7 @@ export class HouseScene extends Reader {
   private gameWidth: number;
   private boardWidth: number;
   private boardHeight: number;
-  private horizontalFields: number;
-  private verticalFields: number;
-  private tick: number;
-
-  // data
-  private foods = 0;
-
+  
   // objects
   private player: Player;
   private gameBorder: Phaser.GameObjects.Graphics[];
@@ -54,7 +48,6 @@ export class HouseScene extends Reader {
 
   create(): void {
     // objects
-
     this.scoreText = this.add.bitmapText(
       this.gameWidth / 5,
       1,
@@ -65,9 +58,6 @@ export class HouseScene extends Reader {
 
     this.gameBorder = [];
     createTextAuto(this);
-    setInterval(() => {
-      speak(this.player.toString());
-    }, 120000);
   }
 
   update(): void {

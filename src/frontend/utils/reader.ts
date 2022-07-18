@@ -138,6 +138,7 @@ export class Reader extends Phaser.Scene {
     // touch and click
     const distanceY =
       this.input.activePointer.upY - this.input.activePointer.downY;
+      
     if (
       !this.input.activePointer.isDown &&
       this.isClicking == true &&

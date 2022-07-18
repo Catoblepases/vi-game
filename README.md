@@ -20,9 +20,7 @@ node12+
 
 ## to compile and run
 ```shell
-npm run build-front
-npm run build-back
-npm run start-server
+npm run dev
 ```
 
 ## to deploy to heroku
