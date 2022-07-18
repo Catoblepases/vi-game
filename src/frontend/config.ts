@@ -46,6 +46,7 @@ export const GameConfig: Phaser.Types.Core.GameConfig = {
 };
 
 export function setGameConfig(): Phaser.Types.Core.GameConfig {
+
   var config = GameConfig;
   const platform = checkPlatform();
 
@@ -62,6 +63,7 @@ export function setGameConfig(): Phaser.Types.Core.GameConfig {
     config.height = 720;
     config.width = 1280;
   }
+
   console.log(config);
 
   return config;

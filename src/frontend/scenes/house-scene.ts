@@ -62,9 +62,11 @@ export class HouseScene extends Reader {
 
   update(): void {
     super.update();
+
     if (Phaser.Input.Keyboard.JustDown(this.callDataMenu)) {
       speak(this.player.toString());
     }
+
     this.scoreText.setText(this.player.toInfoSimple());
 
     if (this.isConfirm()) {
@@ -86,6 +88,7 @@ export class HouseScene extends Reader {
         default:
           break;
       }
+      
       this.unConfirm();
     }
   }

@@ -16,6 +16,7 @@ policys.set(Policy.AllEther, [0, 1]);
 policys.set(Policy.AllFood, [1, 0]);
 
 export class Player {
+  private day: number;
   private time: number;
   private ether: number;
   private houses: number;
@@ -57,6 +58,10 @@ export class Player {
     const amount = Math.round(Math.random() * 2) + 1;
     this.foods += amount;
     speak("add " + amount + " food");
+  }
+
+  timeFluent(){
+    setTimeout(()=>{},1000);
   }
 
   toString(): string {

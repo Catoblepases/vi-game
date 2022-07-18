@@ -4,6 +4,7 @@ import { createTextAuto } from "../utils/createMenu";
 import { Reader, speak } from "../utils/reader";
 
 export class AdventureScene extends Reader {
+  
   private startKey: Phaser.Input.Keyboard.Key;
 
   constructor() {
