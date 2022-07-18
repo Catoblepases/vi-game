@@ -15,7 +15,7 @@
     "build-front": "webpack --config webpack-front.config.js",
     "build-front-serve": "webpack serve --config webpack-front.config.js",
     "build-front-live": "webpack watch --config webpack-front.config.js",
-    "deploy": "git add . && git commit -m '..' && git push heroku master"
+    "deploy": "git add . && git commit -m '..' && git push heroku main"
   },
   "author": "",
   "license": "ISC",
