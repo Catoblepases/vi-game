@@ -1,5 +1,10 @@
 import { REvent } from "./REvent";
 
+export class Position {
+  public x: number;
+  public y: number;
+}
+
 export class Map {
   private map: REvent[][];
 
@@ -17,8 +22,12 @@ export class Map {
     }
   }
 
-  up() {
-    // this.currentCase.x++;
-  }
+  up() {}
+
   down() {}
+
+  left() {}
+
+  right() {}
+  
 }
