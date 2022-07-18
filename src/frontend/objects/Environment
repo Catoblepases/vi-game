@@ -1,0 +1,43 @@
+import { REvent } from "./REvent";
+import{Player} from "./Player";
+import{Position} from "./Position";
+import{AllEvents} from "./AllEvents";
+import { CONST } from "../const/const";
+
+export class Environment{
+    private player: Player;
+    private position: Position;
+    private events: AllEvents;
+
+    constructor(){
+        this.player= new Player();
+        this.position=new Position(15,15);
+        this.events=new AllEvents();
+
+    }
+
+    moveUp(){
+        if (this.position.y<CONST.MAP_SIZE-1){
+            this.position.y+=1;
+        }
+        
+    }
+    moveDown(){
+        if (this.position.y>1){
+            this.position.y-=1;
+        }
+        
+    }
+    moveLeft(){
+        if (this.position.x>1){
+            this.position.x-=1;
+        }
+    }
+    moveRight(){
+        if(this.position.x<CONST.MAP_SIZE-1){
+            this.position.x+=1;
+        }
+    }
+
+
+}
