@@ -10,7 +10,7 @@ export class HouseScene extends Reader {
   private gameWidth: number;
   private boardWidth: number;
   private boardHeight: number;
-  
+
   // objects
   private player: Player;
   private gameBorder: Phaser.GameObjects.Graphics[];
@@ -34,6 +34,7 @@ export class HouseScene extends Reader {
   init(data: any): void {
     super.init(data);
     this.player = data.player;
+
     this.gameHeight = this.sys.canvas.height;
     this.gameWidth = this.sys.canvas.width;
     this.boardWidth = this.gameWidth - 2 * CONST.FIELD_SIZE;
@@ -80,6 +81,10 @@ export class HouseScene extends Reader {
         case 2:
           break;
         case 3:
+          this.scene.stop();
+          this.scene.start("AdventureScene", {
+            player: this.player,
+          });
           break;
         case 4:
           this.scene.stop();
@@ -88,7 +93,7 @@ export class HouseScene extends Reader {
         default:
           break;
       }
-      
+
       this.unConfirm();
     }
   }

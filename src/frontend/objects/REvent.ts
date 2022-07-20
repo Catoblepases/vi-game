@@ -1,5 +1,3 @@
-export class REvent{
-    constructor(){
-        
-    }
+export class REvent {
+  constructor() {}
 }

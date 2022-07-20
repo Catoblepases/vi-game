@@ -2,18 +2,36 @@ import { CONST } from "../const/const";
 import { Player } from "../objects/Player";
 import { createTextAuto } from "../utils/createMenu";
 import { speak } from "../utils/reader";
+import { AllEvents } from "../objects/AllEvents";
+import { Position } from "../objects/Position";
 
 export class AdventureScene extends Phaser.Scene {
+  protected upKey: Phaser.Input.Keyboard.Key;
+  protected downKey: Phaser.Input.Keyboard.Key;
+  protected leftKey: Phaser.Input.Keyboard.Key;
+  protected rightKey: Phaser.Input.Keyboard.Key;
 
-  private startKey: Phaser.Input.Keyboard.Key;
+  protected allEvents: AllEvents;
+  protected player: Player;
+  protected position: Position;
 
   constructor() {
-    super("AdventureScene");
+    super({ key: "AdventureScene" });
   }
 
   init(data: any): void {
-    this.startKey = this.input.keyboard.addKey(
-      Phaser.Input.Keyboard.KeyCodes.S
+    this.player = data.player;
+    this.position = data.player.getPosition();
+
+    this.upKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
+    this.downKey = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.DOWN
+    );
+    this.leftKey = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.LEFT
+    );
+    this.rightKey = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.RIGHT
     );
   }
 
@@ -25,9 +43,25 @@ export class AdventureScene extends Phaser.Scene {
     );
   }
 
-  create(): void {
-  }
+  create(): void {}
 
   update(): void {
+    if (Phaser.Input.Keyboard.JustDown(this.leftKey)) {
+      this.position.moveLeft();
+      speak("move left");
+      speak("at " + this.position.x + " " + this.position.y);
+    } else if (Phaser.Input.Keyboard.JustDown(this.rightKey)) {
+      this.position.moveRight();
+      speak("move right");
+      speak("at " + this.position.x + " " + this.position.y);
+    } else if (Phaser.Input.Keyboard.JustDown(this.downKey)) {
+      this.position.moveDown();
+      speak("move down");
+      speak("at " + this.position.x + " " + this.position.y);
+    } else if (Phaser.Input.Keyboard.JustDown(this.upKey)) {
+      this.position.moveUp();
+      speak("move up");
+      speak("at " + this.position.x + " " + this.position.y);
+    }
   }
 }

@@ -1,4 +1,5 @@
 import { Reader, speak } from "../utils/reader";
+import { Position } from "./Position";
 
 export enum Policy {
   Balance = "Balance",
@@ -24,6 +25,8 @@ export class Player {
   private foods: number;
   private policy: string;
 
+  private position: Position;
+
   private name: string;
   private residents: number;
 
@@ -36,6 +39,7 @@ export class Player {
     this.residents = 0;
     this.policy = Policy.Balance;
     this.name = "ivy";
+    this.position = new Position(15, 15);
   }
 
   newDay() {
@@ -60,8 +64,8 @@ export class Player {
     speak("add " + amount + " food");
   }
 
-  timeFluent(){
-    setTimeout(()=>{},1000);
+  timeFluent() {
+    setTimeout(() => {}, 1000);
   }
 
   toString(): string {
@@ -111,5 +115,8 @@ export class Player {
   }
   getResidents() {
     return this.residents;
+  }
+  getPosition() {
+    return this.position;
   }
 }

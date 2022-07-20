@@ -5,12 +5,14 @@ import { Reader } from "../utils/reader";
 
 export class EtherScene extends Reader {
   private startKey: Phaser.Input.Keyboard.Key;
+  private player: Player;
   constructor() {
     super(["build house", "create weapons", "quit"], "EtherScene");
   }
 
   init(data: any): void {
     super.init(data);
+    this.player = data.player;
     this.startKey = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.S
     );
@@ -44,7 +46,7 @@ export class EtherScene extends Reader {
 
       switch (this.currentChoice) {
         case 0:
-          this.scene.start("HouseScene", { player: new Player() });
+          this.scene.start("HouseScene", { player: this.player });
           console.log("start");
           break;
         case 2:

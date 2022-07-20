@@ -44,7 +44,9 @@ export class MainMenuScene extends Reader {
 
       switch (this.currentChoice) {
         case 0:
-          this.scene.start("HouseScene", { player: new Player() });
+          this.scene.start("HouseScene", {
+            player: new Player(),
+          });
           console.log("start");
           break;
         case 2:

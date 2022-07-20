@@ -5,11 +5,23 @@ export class AllEvents {
   private events: REvent[][];
 
   constructor() {
-    this.events = new REvent[CONST.MAP_SIZE][CONST.MAP_SIZE]();
+    this.events = [];
+    for (let idx = 0; idx < CONST.MAP_SIZE; idx++) {
+      const item: any[] = [];
+      for (let i = 0; i < CONST.MAP_SIZE; i++) {
+        item.push(new REvent());
+      }
+      this.events.push(item);
+    }
   }
-  
-  getEvent(x:number,y:number ){
-    if (x<=CONST.MAP_SIZE-1&&x>=0&&y<=CONST.MAP_SIZE-1&&y>=0){
+
+  getEvent(x: number, y: number) {
+    if (
+      x <= CONST.MAP_SIZE - 1 &&
+      x >= 0 &&
+      y <= CONST.MAP_SIZE - 1 &&
+      y >= 0
+    ) {
       return this.events[x][y];
     }
   }
