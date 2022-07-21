@@ -6,6 +6,10 @@ export class BootScene extends MapWithReader {
     super("OpenningScene");
   }
 
+  proload(){
+    
+  }
+
   init(data: any): void {
     
   }

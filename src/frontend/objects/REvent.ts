@@ -7,19 +7,23 @@ enum EventType {
   Animal = "Animal",
   Monster = "Monster",
   Ruins = "Ruins",
+  None = "None",
 }
 
 export class REvent {
   private player: Player;
   private eventType: EventType;
   private sound: Howl;
-  constructor(eventType: EventType) {
+  constructor(param: any) {
+    let { eventType = EventType.None } = param;
     this.eventType = eventType;
-    this.sound = new Howl({
-      src: ["./sounds/" + this.eventType + ".wav"],
-      autoplay: true,
-      loop: true,
-    });
+    if (this.eventType != EventType.None) {
+      this.sound = new Howl({
+        src: ["./sounds/" + this.eventType + ".wav"],
+        autoplay: true,
+        loop: true,
+      });
+    }
   }
   adjustVolume(value: number) {
     this.sound.volume(value);

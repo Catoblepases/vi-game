@@ -2,6 +2,9 @@ import { REvent } from "./REvent";
 import { CONST } from "../const/const";
 
 export class AllEvents {
+  getSoundsList() {
+    throw new Error("Method not implemented.");
+  }
   private events: REvent[][];
 
   constructor() {
@@ -9,7 +12,7 @@ export class AllEvents {
     for (let idx = 0; idx < CONST.MAP_SIZE; idx++) {
       const item: any[] = [];
       for (let i = 0; i < CONST.MAP_SIZE; i++) {
-        item.push(new REvent());
+        item.push(new REvent({}));
       }
       this.events.push(item);
     }
@@ -25,5 +28,4 @@ export class AllEvents {
       return this.events[x][y];
     }
   }
-
 }
