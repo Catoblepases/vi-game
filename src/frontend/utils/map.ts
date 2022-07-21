@@ -1,11 +1,11 @@
 import { CONST } from "../const/const";
 import { Player } from "../objects/Player";
-import { createTextAuto } from "../utils/createMenu";
-import { speak } from "../utils/reader";
+import { createTextAuto } from "./createMenu";
+import { speak } from "./reader";
 import { AllEvents } from "../objects/AllEvents";
 import { Position } from "../objects/Position";
 
-export class AdventureScene extends Phaser.Scene {
+export class MapWithReader extends Phaser.Scene {
   protected upKey: Phaser.Input.Keyboard.Key;
   protected downKey: Phaser.Input.Keyboard.Key;
   protected leftKey: Phaser.Input.Keyboard.Key;
@@ -15,8 +15,8 @@ export class AdventureScene extends Phaser.Scene {
   protected player: Player;
   protected position: Position;
 
-  constructor() {
-    super({ key: "AdventureScene" });
+  constructor(name: string) {
+    super({ key: name });
   }
 
   init(data: any): void {
@@ -27,11 +27,9 @@ export class AdventureScene extends Phaser.Scene {
     this.downKey = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.DOWN
     );
-
     this.leftKey = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.LEFT
     );
-  
     this.rightKey = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.RIGHT
     );
@@ -46,6 +44,8 @@ export class AdventureScene extends Phaser.Scene {
   }
 
   create(): void {}
+
+  volumeCalculator(p1: Position, p2: Position) {}
 
   update(): void {
     if (Phaser.Input.Keyboard.JustDown(this.leftKey)) {
