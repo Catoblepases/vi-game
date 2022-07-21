@@ -16,15 +16,11 @@ export class AdventureScene extends MapWithReader {
   }
 
   preload(): void {
-    this.load.bitmapFont(
-      "sysFont",
-      "./assets/font/snakeFont.png",
-      "./assets/font/snakeFont.fnt"
-    );
   }
 
   create(): void {}
 
   update(): void {
+    super.update();
   }
 }
