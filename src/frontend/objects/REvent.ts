@@ -11,21 +11,21 @@ export enum EventType {
 }
 
 export class REvent {
-  private player: Player;
-  private eventType: EventType;
-  private sound: Howl;
-  constructor(param: any) {
-    let { eventType = EventType.None } = param;
-    this.eventType = eventType;
-    if (this.eventType != EventType.None) {
-      this.sound = new Howl({
-        src: ["./sounds/" + this.eventType + ".wav"],
-        autoplay: true,
-        loop: true,
-      });
+  //event =0-> no event
+  //event =1 -> collectEther 
+  //event =2 ->collectFood
+  //3-> monster 
+  //4-> animal
+  event : number;
+
+  constructor(param:any) {
+    let {event=0}=param;
+    if (event===0) {
+      this.event=0;
+    }
+    else{
+      this.event=event;
     }
   }
-  adjustVolume(value: number) {
-    this.sound.volume(value);
-  }
+  
 }
