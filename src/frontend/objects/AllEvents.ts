@@ -9,7 +9,7 @@ export class AllEvents {
     for (let idx = 0; idx < CONST.MAP_SIZE; idx++) {
       const item: any[] = [];
       for (let i = 0; i < CONST.MAP_SIZE; i++) {
-        item.push(new REvent());
+        item.push(new REvent({}));
       }
       this.events.push(item);
     }

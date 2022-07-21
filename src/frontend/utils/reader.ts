@@ -2,9 +2,9 @@ import { CONST } from "../const/const";
 
 export function speak(msg: string) {
   let ssu = new window.SpeechSynthesisUtterance();
-  // ssu.voice = window.speechSynthesis.getVoices()[1];
+  ssu.voice = window.speechSynthesis.getVoices()[1];
   ssu.lang = "en-US";
-  // ssu.rate = 1.2;
+  ssu.rate = 1.2;
   ssu.text = msg;
   window.speechSynthesis.speak(ssu);
 }
