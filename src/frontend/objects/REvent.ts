@@ -1,7 +1,7 @@
 import { Player } from "./Player";
 import { howler, Howl } from "howler";
 
-enum EventType {
+export enum EventType {
   Food = "Food",
   Ether = "Ether",
   Animal = "Animal",

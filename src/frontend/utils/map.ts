@@ -10,6 +10,7 @@ export class MapWithReader extends Phaser.Scene {
   protected downKey: Phaser.Input.Keyboard.Key;
   protected leftKey: Phaser.Input.Keyboard.Key;
   protected rightKey: Phaser.Input.Keyboard.Key;
+  protected clickKey: Phaser.Input.Keyboard.Key;
 
   protected allEvents: AllEvents;
   protected player: Player;
@@ -31,9 +32,13 @@ export class MapWithReader extends Phaser.Scene {
     this.leftKey = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.LEFT
     );
-    
+
     this.rightKey = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.RIGHT
+    );
+
+    this.clickKey = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.SPACE
     );
   }
 
@@ -43,8 +48,6 @@ export class MapWithReader extends Phaser.Scene {
       "./assets/font/snakeFont.png",
       "./assets/font/snakeFont.fnt"
     );
-
-    var soundsFileList=this.allEvents.getSoundsList();
   }
 
   create(): void {}

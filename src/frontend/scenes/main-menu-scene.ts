@@ -1,7 +1,7 @@
 import { CONST } from "../const/const";
 import { Player } from "../objects/Player";
 import { createTextAuto } from "../utils/createMenu";
-import { Reader } from "../utils/reader";
+import { Reader, speak } from "../utils/reader";
 
 export class MainMenuScene extends Reader {
   private startKey: Phaser.Input.Keyboard.Key;
@@ -40,7 +40,6 @@ export class MainMenuScene extends Reader {
   update(): void {
     super.update();
     if (this.isConfirm()) {
-      console.log(this.currentChoice);
 
       switch (this.currentChoice) {
         case 0:

@@ -2,19 +2,21 @@ import { REvent } from "./REvent";
 import { CONST } from "../const/const";
 
 export class AllEvents {
-  getSoundsList() {
-    throw new Error("Method not implemented.");
-  }
   private events: REvent[][];
 
-  constructor() {
-    this.events = [];
-    for (let idx = 0; idx < CONST.MAP_SIZE; idx++) {
-      const item: any[] = [];
-      for (let i = 0; i < CONST.MAP_SIZE; i++) {
-        item.push(new REvent({}));
+  constructor(param: any) {
+    let { events = undefined } = param;
+    if (events) {
+      this.events = events;
+    } else {
+      this.events = [];
+      for (let idx = 0; idx < CONST.MAP_SIZE; idx++) {
+        const item: any[] = [];
+        for (let i = 0; i < CONST.MAP_SIZE; i++) {
+          item.push(new REvent({}));
+        }
+        this.events.push(item);
       }
-      this.events.push(item);
     }
   }
 

@@ -138,7 +138,7 @@ export class Reader extends Phaser.Scene {
     // touch and click
     const distanceY =
       this.input.activePointer.upY - this.input.activePointer.downY;
-      
+
     if (
       !this.input.activePointer.isDown &&
       this.isClicking == true &&
@@ -184,6 +184,10 @@ export class Reader extends Phaser.Scene {
       speak(this.choices[this.currentChoice]);
     } else if (Phaser.Input.Keyboard.JustDown(this.helpKey)) {
       speak(helpTextPC);
+    }
+
+    if (this.isConfirm()) {
+      speak(this.choices[this.currentChoice]);
     }
   }
 
