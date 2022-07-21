@@ -13,6 +13,7 @@ export class AllEvents {
       }
       this.events.push(item);
     }
+    this.events[1][1]
   }
 
   getEvent(x: number, y: number) {
