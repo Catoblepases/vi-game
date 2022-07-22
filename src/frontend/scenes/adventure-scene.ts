@@ -1,7 +1,7 @@
 import { CONST } from "../const/const";
 import { Player } from "../objects/Player";
 import { createTextAuto } from "../utils/createMenu";
-import { speak } from "../utils/reader";
+import { speak } from "../utils/menu-reader";
 import { AllEvents } from "../objects/AllEvents";
 import { Position } from "../objects/Position";
 import { REvent } from "../objects/REvent";
@@ -16,28 +16,27 @@ export class AdventureScene extends MapWithReader {
     super.init(data);
   }
 
-  preload(): void {
-  }
+  preload(): void {}
 
   create(): void {}
 
   update(): void {
     super.update();
   }
-  checkEvent(){
-    switch(this.allEvents.getEvent(this.position.x,this.position.y)?.event){
+  checkEvent() {
+    switch (this.allEvents.getEvent(this.position.x, this.position.y)?.event) {
       case 1:
-        this.player.setEther(this.player.getEther()+1);
+        this.player.setEther(this.player.getEther() + 1);
+        break;
       case 2:
-        this.player.setFood(this.player.getFood()+1);
+        this.player.setFood(this.player.getFood() + 1);
+        break;
       case 3:
         this.player.setEther(0);
         this.player.setFood(0);
+        break;
       case 4:
-        
-
-
+        break;
     }
-
   }
 }

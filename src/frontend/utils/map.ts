@@ -1,45 +1,24 @@
 import { CONST } from "../const/const";
 import { Player } from "../objects/Player";
 import { createTextAuto } from "./createMenu";
-import { speak } from "./reader";
+import { speak } from "./menu-reader";
 import { AllEvents } from "../objects/AllEvents";
 import { Position } from "../objects/Position";
+import { Reader } from "./reader";
 
-export class MapWithReader extends Phaser.Scene {
-  protected upKey: Phaser.Input.Keyboard.Key;
-  protected downKey: Phaser.Input.Keyboard.Key;
-  protected leftKey: Phaser.Input.Keyboard.Key;
-  protected rightKey: Phaser.Input.Keyboard.Key;
-  protected clickKey: Phaser.Input.Keyboard.Key;
+export class MapWithReader extends Reader {
 
   protected allEvents: AllEvents;
   protected player: Player;
   protected position: Position;
 
   constructor(name: string) {
-    super({ key: name });
+    super(name);
   }
 
   init(data: any): void {
     this.player = data.player;
     this.position = data.player.getPosition();
-
-    this.upKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
-    this.downKey = this.input.keyboard.addKey(
-      Phaser.Input.Keyboard.KeyCodes.DOWN
-    );
-
-    this.leftKey = this.input.keyboard.addKey(
-      Phaser.Input.Keyboard.KeyCodes.LEFT
-    );
-
-    this.rightKey = this.input.keyboard.addKey(
-      Phaser.Input.Keyboard.KeyCodes.RIGHT
-    );
-
-    this.clickKey = this.input.keyboard.addKey(
-      Phaser.Input.Keyboard.KeyCodes.SPACE
-    );
   }
 
   preload(): void {
@@ -53,6 +32,10 @@ export class MapWithReader extends Phaser.Scene {
   create(): void {}
 
   volumeCalculator(p1: Position, p2: Position) {}
+
+  tripleClick(){
+
+  }
 
   update(): void {
     if (Phaser.Input.Keyboard.JustDown(this.leftKey)) {

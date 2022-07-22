@@ -1,4 +1,4 @@
-import { Reader, speak } from "../utils/reader";
+import { MenuReader, speak } from "../utils/menu-reader";
 import { Position } from "./Position";
 
 export enum Policy {

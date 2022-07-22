@@ -3,10 +3,10 @@ import { Howler, Howl } from "howler";
 import { REvent } from "../objects/REvent";
 import { AllEvents } from "../objects/AllEvents";
 
-export class BootScene extends MapWithReader {
+export class OpenScene extends MapWithReader {
   private process = 0;
   constructor() {
-    super("OpenningScene");
+    super("OpenScene");
     this.allEvents = new AllEvents({
       events: [[new REvent({})], [new REvent({})]],
     });
@@ -26,9 +26,13 @@ export class BootScene extends MapWithReader {
       this.process++;
     }
     
-    if (this.process == 3 && Phaser.Input.Keyboard.JustDown(this.downKey)) {
+    if (this.process == 3 && Phaser.Input.Keyboard.JustDown(this.upKey)) {
       // 15
       this.process++;
+    }
+
+    if (this.process===4) {
+      
     }
   }
 }

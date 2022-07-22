@@ -1,9 +1,9 @@
 import { CONST } from "../const/const";
 import { Player, Policy } from "../objects/Player";
 import { createTextAuto } from "../utils/createMenu";
-import { Reader, speak } from "../utils/reader";
+import { MenuReader, speak } from "../utils/menu-reader";
 
-export class PolicyScene extends Reader {
+export class PolicyScene extends MenuReader {
   private startKey: Phaser.Input.Keyboard.Key;
   private player: Player;
   constructor(player: Player) {

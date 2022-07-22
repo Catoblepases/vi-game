@@ -1,6 +1,6 @@
-import { Reader } from "./reader";
+import { MenuReader } from "./menu-reader";
 
-export function createTextAuto(scene: Reader) {
+export function createTextAuto(scene: MenuReader) {
   var initHPos = scene.sys.canvas.height / 2 - 10;
   var distanceChoice =
     (scene.sys.canvas.height - initHPos - 10) / scene.getChoices().length;

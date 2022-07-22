@@ -4,9 +4,11 @@ import { HouseScene } from "./scenes/house-scene";
 import { MainMenuScene } from "./scenes/main-menu-scene";
 import { AdventureScene } from "./scenes/adventure-scene";
 import { EtherScene } from "./scenes/ether-scene";
-import { Reader } from "./utils/reader";
+import { MenuReader } from "./utils/menu-reader";
 import { checkPlatform } from "./utils/check-sys";
 import GesturesPlugin from "phaser3-rex-plugins/plugins/gestures-plugin.js";
+import { Reader } from "./utils/reader";
+import { OpenScene } from "./scenes/opening-scene";
 
 export const GameConfig: Phaser.Types.Core.GameConfig = {
   title: "RandomLand",
@@ -24,7 +26,7 @@ export const GameConfig: Phaser.Types.Core.GameConfig = {
     PolicyScene,
     AdventureScene,
     EtherScene,
-    Reader,
+    OpenScene,
   ],
   plugins: {
     scene: [
@@ -46,7 +48,6 @@ export const GameConfig: Phaser.Types.Core.GameConfig = {
 };
 
 export function setGameConfig(): Phaser.Types.Core.GameConfig {
-
   var config = GameConfig;
   const platform = checkPlatform();
 

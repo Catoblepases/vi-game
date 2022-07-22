@@ -1,9 +1,9 @@
 import { CONST } from "../const/const";
 import { Player } from "../objects/Player";
 import { createTextAuto } from "../utils/createMenu";
-import { Reader, speak } from "../utils/reader";
+import { MenuReader, speak } from "../utils/menu-reader";
 
-export class HouseScene extends Reader {
+export class HouseScene extends MenuReader {
   private callDataMenu: Phaser.Input.Keyboard.Key;
   // field and game setting
   private gameHeight: number;

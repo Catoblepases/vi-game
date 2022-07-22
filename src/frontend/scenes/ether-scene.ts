@@ -1,9 +1,9 @@
 import { CONST } from "../const/const";
 import { Player } from "../objects/Player";
 import { createTextAuto } from "../utils/createMenu";
-import { Reader } from "../utils/reader";
+import { MenuReader } from "../utils/menu-reader";
 
-export class EtherScene extends Reader {
+export class EtherScene extends MenuReader {
   private startKey: Phaser.Input.Keyboard.Key;
   private player: Player;
   constructor() {

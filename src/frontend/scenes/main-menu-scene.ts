@@ -1,9 +1,9 @@
 import { CONST } from "../const/const";
 import { Player } from "../objects/Player";
 import { createTextAuto } from "../utils/createMenu";
-import { Reader, speak } from "../utils/reader";
+import { MenuReader, speak } from "../utils/menu-reader";
 
-export class MainMenuScene extends Reader {
+export class MainMenuScene extends MenuReader {
   private startKey: Phaser.Input.Keyboard.Key;
   constructor() {
     super(["new Game", "continue", "quit"], "MainMenuScene");
@@ -17,11 +17,7 @@ export class MainMenuScene extends Reader {
   }
 
   preload(): void {
-    this.load.bitmapFont(
-      "sysFont",
-      "./assets/font/snakeFont.png",
-      "./assets/font/snakeFont.fnt"
-    );
+    super.preload();
   }
 
   create(): void {
@@ -40,9 +36,15 @@ export class MainMenuScene extends Reader {
   update(): void {
     super.update();
     if (this.isConfirm()) {
-
+      console.log("confirm");
       switch (this.currentChoice) {
         case 0:
+          this.scene.start("HouseScene", {
+            player: new Player(),
+          });
+          console.log("start");
+          break;
+        case 1:
           this.scene.start("HouseScene", {
             player: new Player(),
           });
