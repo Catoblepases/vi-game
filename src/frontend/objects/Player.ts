@@ -1,4 +1,6 @@
+import { CONST } from "../const/const";
 import { MenuReader, speak } from "../utils/menu-reader";
+import { randomNumber } from "../utils/random";
 import { Position } from "./Position";
 
 export enum Policy {
@@ -39,7 +41,7 @@ export class Player {
     this.residents = 0;
     this.policy = Policy.Balance;
     this.name = "ivy";
-    this.position = new Position(15, 15);
+    this.position = new Position(CONST.MAP_SIZE / 2, CONST.MAP_SIZE / 2);
   }
 
   newDay() {
@@ -53,13 +55,13 @@ export class Player {
   }
 
   collectEther() {
-    const amount = Math.round(Math.random() * 4) + 1;
+    const amount = randomNumber(1, 4);
     this.ether += amount;
     speak("add " + amount + " ether");
   }
 
   collectFood() {
-    const amount = Math.round(Math.random() * 2) + 1;
+    const amount = randomNumber(1, 3);
     this.foods += amount;
     speak("add " + amount + " food");
   }
@@ -119,12 +121,10 @@ export class Player {
   getPosition() {
     return this.position;
   }
-  setEther(numberOfEther:number){
-    this.ether=numberOfEther;
-
+  setEther(numberOfEther: number) {
+    this.ether = numberOfEther;
   }
-  setFood(numebrOfFood:number){
-    this.foods=numebrOfFood;
-
+  setFood(numebrOfFood: number) {
+    this.foods = numebrOfFood;
   }
 }

@@ -1,31 +1,54 @@
 import { Player } from "./Player";
 import { howler, Howl } from "howler";
+import { AllEvents } from "./AllEvents";
+import { Position } from "./Position";
 
 export enum EventType {
-  Food = "Food",
-  Ether = "Ether",
-  Animal = "Animal",
-  Monster = "Monster",
-  Ruins = "Ruins",
-  None = "None",
+  CollectFood = 2,
+  CollectEther = 1,
+  Animal = 4,
+  Monster = 3,
+  Ruins = 5,
+  None = 0,
 }
 
-export class REvent {
-  //event =0-> no event
-  //event =1 -> collectEther 
-  //event =2 ->collectFood
-  //3-> monster 
-  //4-> animal
-  event : number;
+export abstract class REvent {
+  event: EventType;
 
-  constructor(param:any) {
-    let {event=0}=param;
-    if (event===0) {
-      this.event=0;
-    }
-    else{
-      this.event=event;
-    }
+  constructor(param: any) {
+    let { event = EventType.None } = param;
+    this.event = event;
   }
-  
+
+  static createCollectFood() {
+    return new collectFood();
+  }
+
+  static createCollectEther() {
+    return new collectEther();
+  }
+
+  static createDefaultEvent() {
+    return new REvent({});
+  }
+
+  stopEvent(allEvents: AllEvents, position: Position) {
+    allEvents.deleteEvent(position.x, position.y);
+  }
+
+  getEventType() {
+    return this.event;
+  }
+}
+
+export class collectEther extends REvent {
+  constructor() {
+    super({ event: EventType.CollectEther });
+  }
+}
+
+export class collectFood extends REvent {
+  constructor() {
+    super({ event: EventType.CollectFood });
+  }
 }

@@ -9,24 +9,39 @@ export class Position {
     this.y = y;
   }
 
-  moveUp() {
+  moveUp(): boolean {
     if (this.y < CONST.MAP_SIZE - 1) {
       this.y += 1;
+      return true;
+    } else {
+      return false;
     }
   }
-  moveDown() {
+
+  moveDown(): boolean {
     if (this.y > 1) {
       this.y -= 1;
+      return true;
+    } else {
+      return false;
     }
   }
-  moveLeft() {
+
+  moveLeft(): boolean {
     if (this.x > 1) {
       this.x -= 1;
+      return true;
+    } else {
+      return false;
     }
   }
-  moveRight() {
+
+  moveRight(): boolean {
     if (this.x < CONST.MAP_SIZE - 1) {
       this.x += 1;
+      return true;
+    } else {
+      return false;
     }
   }
 }
