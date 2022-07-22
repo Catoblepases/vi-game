@@ -32,6 +32,10 @@ export class MapWithReader extends Reader {
 
   update(): void {
     super.update();
+    this.checkMove();
+  }
+
+  checkMove() {
     if (Phaser.Input.Keyboard.JustDown(this.leftKey)) {
       this.position.moveLeft();
       speak("move left");
@@ -44,6 +48,9 @@ export class MapWithReader extends Reader {
     } else if (Phaser.Input.Keyboard.JustDown(this.upKey)) {
       this.position.moveUp();
       speak("move up");
+    } else {
+      return;
     }
+    
   }
 }
