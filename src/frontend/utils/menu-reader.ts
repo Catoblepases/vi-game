@@ -103,7 +103,7 @@ export class MenuReader extends Reader {
     } else if (Phaser.Input.Keyboard.JustDown(this.helpKey)) {
       speak(helpTextPC);
     } else if (Phaser.Input.Keyboard.JustDown(this.confirmKey)) {
-      this.confirm();
+      this.confirmButton();
     }
   }
 

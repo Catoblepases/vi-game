@@ -119,12 +119,10 @@ export class Player {
   getPosition() {
     return this.position;
   }
-  setEther(numberOfEther:number){
-    this.ether=numberOfEther;
-
+  setEther(numberOfEther: number) {
+    this.ether = numberOfEther;
   }
-  setFood(numebrOfFood:number){
-    this.foods=numebrOfFood;
-
+  setFood(numebrOfFood: number) {
+    this.foods = numebrOfFood;
   }
 }

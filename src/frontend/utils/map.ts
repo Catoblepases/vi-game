@@ -1,13 +1,11 @@
 import { CONST } from "../const/const";
 import { Player } from "../objects/Player";
-import { createTextAuto } from "./createMenu";
 import { speak } from "./menu-reader";
 import { AllEvents } from "../objects/AllEvents";
 import { Position } from "../objects/Position";
 import { Reader } from "./reader";
 
 export class MapWithReader extends Reader {
-
   protected allEvents: AllEvents;
   protected player: Player;
   protected position: Position;
@@ -17,27 +15,23 @@ export class MapWithReader extends Reader {
   }
 
   init(data: any): void {
+    super.init(data);
     this.player = data.player;
     this.position = data.player.getPosition();
   }
 
   preload(): void {
-    this.load.bitmapFont(
-      "sysFont",
-      "./assets/font/snakeFont.png",
-      "./assets/font/snakeFont.fnt"
-    );
+    super.preload();
   }
 
   create(): void {}
 
   volumeCalculator(p1: Position, p2: Position) {}
 
-  tripleClick(){
-
-  }
+  tripleClick() {}
 
   update(): void {
+    super.update();
     if (Phaser.Input.Keyboard.JustDown(this.leftKey)) {
       this.position.moveLeft();
       speak("move left");
