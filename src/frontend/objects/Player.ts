@@ -19,6 +19,14 @@ policys.set(Policy.AllEther, [0, 1]);
 policys.set(Policy.AllFood, [1, 0]);
 
 export class Player {
+  private static _instance?: Player; // Declare private static properties, store single instances
+
+  static get getInstance() {
+    // get this single instance by the get method, if there is no instance object created, if there is, then return this instance object directly
+    if (!Player._instance) Player._instance = new Player();
+    return Player._instance;
+  }
+
   private day: number;
   private time: number;
   private ether: number;
@@ -32,7 +40,7 @@ export class Player {
   private name: string;
   private residents: number;
 
-  constructor() {
+  private constructor() {
     this.time = 0;
     this.ether = 2;
     this.houses = 0;
@@ -106,25 +114,25 @@ export class Player {
     );
   }
 
-  getFood() {
+  public get getFood() {
     return this.foods;
   }
-  getEther() {
+  public get getEther() {
     return this.ether;
   }
-  getHouse() {
+  public get getHouse() {
     return this.houses;
   }
-  getResidents() {
+  public get getResidents() {
     return this.residents;
   }
-  getPosition() {
+  public get getPosition() {
     return this.position;
   }
-  setEther(numberOfEther: number) {
+  public set setEther(numberOfEther: number) {
     this.ether = numberOfEther;
   }
-  setFood(numebrOfFood: number) {
+  public set setFood(numebrOfFood: number) {
     this.foods = numebrOfFood;
   }
 }

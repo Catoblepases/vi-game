@@ -8,7 +8,7 @@ export class OpenScene extends MapWithReader {
   constructor() {
     super("OpenScene");
     this.allEvents = new AllEvents({
-      events: [[new REvent({})], [new REvent({})]],
+      events: [[REvent.createDefaultEvent()], [REvent.createDefaultEvent()]],
     });
   }
 

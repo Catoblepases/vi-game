@@ -6,6 +6,7 @@ import { AllEvents } from "../objects/AllEvents";
 import { Position } from "../objects/Position";
 import { EventType, REvent } from "../objects/REvent";
 import { MapWithReader } from "../utils/map";
+import { Monster } from "../objects/Monster";
 
 export class AdventureScene extends MapWithReader {
   constructor() {
@@ -13,6 +14,10 @@ export class AdventureScene extends MapWithReader {
     this.allEvents = new AllEvents({});
     this.allEvents.addEvent(REvent.createCollectFood(), new Position(7, 8));
     this.allEvents.addEvent(REvent.createCollectEther(), new Position(7, 9));
+    this.allEvents.addEvent(
+      new Monster(new Position(10, 10)),
+      new Position(10, 10)
+    );
   }
 
   init(data: any): void {
@@ -28,22 +33,5 @@ export class AdventureScene extends MapWithReader {
   update(): void {
     super.update();
     this.checkEvent();
-  }
-
-  checkEvent() {
-    switch (this.allEvents.getEvent(this.position.x, this.position.y)?.event) {
-      case 1:
-        this.player.setEther(this.player.getEther() + 1);
-        break;
-      case 2:
-        this.player.setFood(this.player.getFood() + 1);
-        break;
-      case 3:
-        this.player.setEther(0);
-        this.player.setFood(0);
-        break;
-      case 4:
-        break;
-    }
   }
 }

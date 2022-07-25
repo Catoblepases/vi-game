@@ -5,7 +5,7 @@ import { Monster } from "./Monster";
 import { Animal } from "./Animal";
 
 export class AllEvents {
-  private events: REvent[][];
+  private events: Map<string, REvent[]>;
   private monsters: Monster[];
   private animals: Animal[];
 
@@ -15,18 +15,22 @@ export class AllEvents {
       this.events = events;
       return;
     }
-    this.events = [];
-    for (let idx = 0; idx < CONST.MAP_SIZE; idx++) {
-      const item: any[] = [];
-      for (let i = 0; i < CONST.MAP_SIZE; i++) {
-        item.push(REvent.createDefaultEvent());
-      }
-      this.events.push(item);
-    }
+    this.events = new Map();
+    this.animals = [];
+    this.monsters = [];
   }
 
   addEvent(event: REvent, position: Position) {
-    this.events[position.x][position.y] = event;
+    const key = position.toString();
+    if (this.events.has(key)) {
+      this.events.get(key)?.push(event);
+    } else {
+      this.events.set(key, [event]);
+    }
+    // Sort by Event Priority
+    this.events.get(key)?.sort((a, b) => {
+      return b.getEventType() - a.getEventType();
+    });
     switch (event.getEventType()) {
       case EventType.Monster:
         this.monsters.push(event as Monster);
@@ -39,18 +43,26 @@ export class AllEvents {
     }
   }
 
-  deleteEvent(x: number, y: number) {
-    AllEvents[x][y] = REvent.createDefaultEvent();
+  deleteEvent(event: REvent, position: Position) {
+    const key = position.toString();
+    this.events.get(key)?.shift();
   }
 
-  getEvent(x: number, y: number) {
+  getEvents(position: Position) {
     if (
-      x <= CONST.MAP_SIZE - 1 &&
-      x >= 0 &&
-      y <= CONST.MAP_SIZE - 1 &&
-      y >= 0
+      position.x <= CONST.MAP_SIZE - 1 &&
+      position.x >= 0 &&
+      position.y <= CONST.MAP_SIZE - 1 &&
+      position.y >= 0
     ) {
-      return this.events[x][y];
+      return this.events.get(position.toString());
+    }
+  }
+
+  moveToPlayer() {
+    for (let i = 0; i < this.monsters.length; i++) {
+      const item = this.monsters[i];
+      item.moveToPlayer(this);
     }
   }
 }

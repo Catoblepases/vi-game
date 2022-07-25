@@ -2,12 +2,13 @@ import { Player } from "./Player";
 import { howler, Howl } from "howler";
 import { AllEvents } from "./AllEvents";
 import { Position } from "./Position";
+import { delay, Sounds } from "./Sounds";
 
 export enum EventType {
   CollectFood = 2,
   CollectEther = 1,
-  Animal = 4,
-  Monster = 3,
+  Animal = 3,
+  Monster = 4,
   Ruins = 5,
   None = 0,
 }
@@ -29,26 +30,52 @@ export abstract class REvent {
   }
 
   static createDefaultEvent() {
-    return new REvent({});
+    return new NoneEvent();
   }
 
+  abstract playSound(position: Position);
+
+  abstract do();
+
   stopEvent(allEvents: AllEvents, position: Position) {
-    allEvents.deleteEvent(position.x, position.y);
+    allEvents.deleteEvent(this, position);
   }
 
   getEventType() {
     return this.event;
   }
+
+  toString() {
+    return EventType[this.event];
+  }
+}
+
+export class NoneEvent extends REvent {
+  constructor() {
+    super({ event: EventType.None });
+  }
+  playSound(position: Position) {}
+  do() {}
 }
 
 export class collectEther extends REvent {
   constructor() {
     super({ event: EventType.CollectEther });
   }
+  playSound(position: Position) {}
+  do() {
+    Sounds.getInstance.playOnGetEtherResources();
+    Player.getInstance.collectEther();
+  }
 }
 
 export class collectFood extends REvent {
   constructor() {
     super({ event: EventType.CollectFood });
+  }
+  playSound(position: Position) {}
+  async do() {
+    await Sounds.getInstance.playOnGetFood();
+    Player.getInstance.collectFood();
   }
 }

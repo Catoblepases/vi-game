@@ -1,5 +1,6 @@
 import { CONST } from "../const/const";
 import { Player } from "../objects/Player";
+import { Sounds } from "../objects/Sounds";
 import { createTextAuto } from "../utils/createMenu";
 import { MenuReader, speak } from "../utils/menu-reader";
 
@@ -18,6 +19,7 @@ export class MainMenuScene extends MenuReader {
 
   preload(): void {
     super.preload();
+    Sounds.getInstance;
   }
 
   create(): void {
@@ -40,13 +42,13 @@ export class MainMenuScene extends MenuReader {
       switch (this.currentChoice) {
         case 0:
           this.scene.start("HouseScene", {
-            player: new Player(),
+            player: Player.getInstance,
           });
           console.log("start");
           break;
         case 1:
           this.scene.start("HouseScene", {
-            player: new Player(),
+            player: Player.getInstance,
           });
           console.log("start");
           break;
