@@ -34,6 +34,7 @@ export abstract class REvent {
   }
 
   abstract playSound(position: Position);
+  abstract changeSound(position: Position);
 
   abstract do();
 
@@ -51,6 +52,7 @@ export abstract class REvent {
 }
 
 export class NoneEvent extends REvent {
+  changeSound(position: Position) {}
   constructor() {
     super({ event: EventType.None });
   }
@@ -62,6 +64,7 @@ export class collectEther extends REvent {
   constructor() {
     super({ event: EventType.CollectEther });
   }
+  changeSound(position: Position) {}
   playSound(position: Position) {}
   async do() {
     await Sounds.getInstance.playOnGetEtherResources();
@@ -73,6 +76,7 @@ export class collectFood extends REvent {
   constructor() {
     super({ event: EventType.CollectFood });
   }
+  changeSound(position: Position) {}
   playSound(position: Position) {}
   async do() {
     await Sounds.getInstance.playOnGetFood();

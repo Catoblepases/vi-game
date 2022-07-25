@@ -15,8 +15,8 @@ export class AdventureScene extends MapWithReader {
     this.allEvents.addEvent(REvent.createCollectFood(), new Position(7, 8));
     this.allEvents.addEvent(REvent.createCollectEther(), new Position(7, 9));
     this.allEvents.addEvent(
-      new Monster(new Position(10, 10)),
-      new Position(10, 10)
+      new Monster(new Position(15, 15)),
+      new Position(15, 15)
     );
     this.allEvents.playSounds();
   }

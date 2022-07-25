@@ -29,7 +29,7 @@ export const GameConfig: Phaser.Types.Core.GameConfig = {
   ],
   input: {
     keyboard: true,
-    mouse: true,
+    mouse: false,
     touch: true,
     gamepad: false,
   },

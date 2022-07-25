@@ -2,6 +2,7 @@ import { MapWithReader } from "../utils/map";
 import { Howler, Howl } from "howler";
 import { REvent } from "../objects/REvent";
 import { AllEvents } from "../objects/AllEvents";
+import { Sounds } from "../objects/Sounds";
 
 export class OpenScene extends MapWithReader {
   private process = 0;
@@ -17,16 +18,17 @@ export class OpenScene extends MapWithReader {
   init(data: any): void {
     super.init(data);
     this.process = data.process;
-    this.process++;
+    console.log(this.process);
   }
-
   update(): void {
     super.update();
     switch (this.process) {
       case 0:
-        // dialog01
-        // voiceover01
-        this.process++;
+        Sounds.getInstance.playDialog();
+        if (Sounds.getInstance.progress === 2) {
+          Sounds.getInstance.changeToVillage();
+          this.process++;
+        }
         break;
       case 1:
         if (Phaser.Input.Keyboard.JustDown(this.upKey)) {

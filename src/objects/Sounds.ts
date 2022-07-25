@@ -24,8 +24,19 @@ export class Sounds {
   private dialog05: Howl;
   private dialog06: Howl;
 
+  private voiceover01: Howl;
+  private voiceover02: Howl;
+  private voiceover03: Howl;
+  private voiceover04_1: Howl;
+  private voiceover04_2: Howl;
+  private voiceover04_3: Howl;
+  private voiceover05: Howl;
+  private voiceover06: Howl;
+
   private adventureBgm: Howl;
   private villageBgm: Howl;
+
+  private bgm: Howl;
 
   private monsterA: Howl;
   //if there's different monster sound then use the other two additionals
@@ -52,112 +63,95 @@ export class Sounds {
   }
 
   volumeRate(position: Position) {
-    const d = Math.sqrt(position.distance());
-    const Dmax = Math.sqrt(CONST.MAP_SIZE * CONST.MAP_SIZE);
-    return d / Dmax;
+    const d =
+      Math.sqrt(position.distance()) / (2 * CONST.SOUND_DISTANCE_MULTIPLIER);
+    return Math.exp(-1 * d);
   }
 
-  setPosition(sound:Howl,playPos: Position, evtPos: Position){
-    const position=this.calculSoundsPosition(playPos,evtPos);
-    const volume=this.volumeRate(position);
+  setPosition(sound: Howl, playPos: Position, evtPos: Position) {
+    const position = this.calculSoundsPosition(playPos, evtPos);
+    const volume = this.volumeRate(position);
+    sound.stop();
+    console.log(position + " " + volume);
+    sound.volume(volume);
+    sound.pos(position.x, position.y, 0, sound.play());
+  }
 
+  createDialog(filename: string) {
+    return new Howl({
+      src: [filename],
+      volume: 0.7,
+      loop: false,
+      onstop: () => {
+        this.progressing();
+        if (this.bgm) {
+          this.bgm.volume(0.5);
+        }
+      },
+    });
+  }
+
+  createSoundEffect(filename: string) {
+    return new Howl({
+      src: [filename],
+      volume: 0.6,
+      loop: false,
+    });
+  }
+
+  createContinueObjectSound(filename: string) {
+    return new Howl({
+      src: [filename],
+      loop: true,
+      volume: 0.5,
+    });
   }
 
   constructor() {
     this._progress = 0;
-    this.dialog01 = new Howl({
-      src: ["./sounds/dialog01.wav"],
-      volume: 0.7,
-      onstop: () => {
-        this.progressing();
-      },
-    });
-    this.dialog02 = new Howl({
-      src: ["./sounds/dialog02.wav"],
-    });
-    this.dialog03 = new Howl({
-      src: ["./sounds/dialog03.wav"],
-    });
-    this.dialog04 = new Howl({
-      src: ["./sounds/dialog04.wav"],
-    });
-    this.dialog05 = new Howl({
-      src: ["./sounds/dialog05.wav"],
-    });
-    this.dialog06 = new Howl({
-      src: ["./sounds/dialog06.wav"],
-    });
+    this.dialog01 = this.createDialog("./sounds/dialog01.wav");
+    this.dialog02 = this.createDialog("./sounds/dialog02.wav");
+    this.dialog03 = this.createDialog("./sounds/dialog03.wav");
+    this.dialog04 = this.createDialog("./sounds/dialog04.wav");
+    this.dialog05 = this.createDialog("./sounds/dialog05.wav");
+    this.dialog06 = this.createDialog("./sounds/dialog06.wav");
+    this.animal1dialog = this.createDialog("./sounds/animal1dialog.wav");
+    this.animal2dialog = this.createDialog("./sounds/animal2dialog.wav");
+    this.animal3dialog = this.createDialog("./sounds/animal3dialog.wav");
+
+    this.voiceover01 = this.createDialog("./sounds/voiceover01.wav");
+    this.voiceover02 = this.createDialog("./sounds/voiceover02.wav");
+    this.voiceover03 = this.createDialog("./sounds/voiceover03.wav");
+    this.voiceover04_1 = this.createDialog("./sounds/voiceover04.1.wav");
+    this.voiceover04_2 = this.createDialog("./sounds/voiceover04.2.wav");
+    this.voiceover04_3 = this.createDialog("./sounds/voiceover04.3.wav");
+    this.voiceover05 = this.createDialog("./sounds/voiceover05.wav");
+    this.voiceover06 = this.createDialog("./sounds/voiceover06.wav");
+
     this.adventureBgm = new Howl({
-      src: ["./sounds/adventureBgm.wav"],
+      src: ["./sounds/forest.mp3"],
       loop: true,
       volume: 0.5,
     });
-    this.monsterA = new Howl({
-      src: ["./sounds/monster.wav"],
-      volume: 0.8,
-      loop: true,
-    });
-    this.monsterB = new Howl({
-      src: ["./sounds/monster.wav"],
-      volume: 0.8,
-      loop: true,
-    });
-    this.monsterC = new Howl({
-      src: ["./sounds/monster.wav"],
-      volume: 0.8,
-      loop: true,
-    });
-    this.animal1 = new Howl({
-      src: ["./sounds/squirrel.wav"],
-      volume: 0.6,
-    });
-    this.animal2 = new Howl({
-      src: ["./sounds/animal2.wav"],
-      volume: 0.6,
-    });
-    this.animal3 = new Howl({
-      src: ["./sounds/animal3.wav"],
-      volume: 0.6,
-    });
-
-    this.animal1dialog = new Howl({
-      src: ["./sounds/animal1dialog.wav"],
-      volume: 0.6,
-    });
-
-    this.animal2dialog = new Howl({
-      src: ["./sounds/animal2dialog.wav"],
-      volume: 0.6,
-    });
-
-    this.animal3dialog = new Howl({
-      src: ["./sounds/animal3dialog.wav"],
-      volume: 0.6,
-    });
 
     this.villageBgm = new Howl({
-      src: ["./sounds/villageBgm.wav"],
+      src: ["./sounds/hut.mp3"],
       volume: 0.6,
       loop: true,
     });
 
-    this.onGetFood = new Howl({
-      src: ["./sounds/collectSuccess.wav"],
-      volume: 0.6,
-      loop: false,
-      onstop: () => {
-        this.progressing();
-      },
-    });
+    this.monsterA = this.createContinueObjectSound("./sounds/monster.wav");
+    this.monsterB = this.createContinueObjectSound("./sounds/monster.wav");
+    this.monsterC = this.createContinueObjectSound("./sounds/monster.wav");
 
-    this.onGetEtherResources = new Howl({
-      src: ["./sounds/collectEther.wav"],
-      volume: 0.6,
-      loop: false,
-      onstop: () => {
-        this.progressing();
-      },
-    });
+    this.animal1 = this.createContinueObjectSound("./sounds/squirrel.wav");
+    this.animal2 = this.createContinueObjectSound("./sounds/animal2.wav");
+    this.animal3 = this.createContinueObjectSound("./sounds/animal3.wav");
+
+    this.onGetFood = this.createSoundEffect("./sounds/collectSuccess.wav");
+    this.onGetEtherResources = this.createSoundEffect(
+      "./sounds/collectEther.wav"
+    );
   }
 
   openning() {
@@ -165,50 +159,78 @@ export class Sounds {
     var id1 = this.dialog01.play();
   }
 
-  adventure() {
-    this.adventureBgm.play();
-    var id = this.adventureBgm.play();
+  playNormalBgm() {
+    if (this.bgm) {
+      this.bgm.volume(0.3);
+      this.bgm.play();
+    }
   }
-  stopAdventureBgm() {
-    this.adventureBgm.stop();
+
+  changeToForest() {
+    if (this.bgm) {
+      this.bgm.fade(0.5);
+    }
+    this.bgm = this.adventureBgm;
+    this.playNormalBgm();
   }
-  village() {
-    this.villageBgm.play();
+
+  changeToVillage() {
+    if (this.bgm) {
+      this.bgm.fade(0.5);
+    }
+    this.bgm = this.villageBgm;
+    this.playNormalBgm();
   }
-  stopVillageBgm() {
-    this.villageBgm.stop();
+
+  playDialog() {
+    const dialogs = [
+      this.dialog01,
+      this.voiceover01,
+      this.voiceover02,
+      this.dialog02,
+      this.voiceover03,
+      this.dialog03,
+      this.dialog04,
+      this.dialog05,
+      this.dialog06,
+      this.animal1dialog,
+      this.animal2dialog,
+      this.animal3dialog,
+    ];
+    for (let i = 0; i < dialogs.length; i++) {
+      const sound = dialogs[i];
+      if (sound.playing()) {
+        return;
+      }
+    }
+    if (this.bgm) {
+      this.bgm.volume(0.2);
+    }
+    dialogs[this.progress].play();
   }
+
   async playOnGetFood() {
     this.onGetFood.play();
     await delay(this.onGetFood.duration());
   }
+
   async playOnGetEtherResources() {
     this.onGetEtherResources.play();
     await delay(this.onGetEtherResources.duration());
   }
   playMonsterA(evtPos: Position) {
     this.monsterA.play();
-    // this.changeMonsterA(evtPos);
+    this.changeMonsterA(evtPos);
   }
   changeMonsterA(evtPos: Position) {
-    const pos = this.calculSoundsPosition(
-      Player.getInstance.getPosition,
-      evtPos
-    );
-    this.monsterA.stop();
-    this.monsterA.pos(pos.x, pos.y, 0, this.monsterA.play());
-    console.log(pos);
+    this.setPosition(this.monsterA, Player.getInstance.getPosition, evtPos);
   }
   playMonsterB(evtPos: Position) {
     this.monsterB.play();
     this.changeMonsterB(evtPos);
   }
   changeMonsterB(evtPos: Position) {
-    const pos = this.calculSoundsPosition(
-      Player.getInstance.getPosition,
-      evtPos
-    );
-    this.monsterB.pos(pos.x, pos.y, 0);
+    this.setPosition(this.monsterB, Player.getInstance.getPosition, evtPos);
   }
 
   playMonsterC(evtPos: Position) {
@@ -217,48 +239,51 @@ export class Sounds {
   }
 
   changeMonsterC(evtPos: Position) {
-    const pos = this.calculSoundsPosition(
-      Player.getInstance.getPosition,
-      evtPos
-    );
-    this.monsterC.pos(pos.x, pos.y, 0);
+    this.setPosition(this.monsterC, Player.getInstance.getPosition, evtPos);
   }
+
   playAnimal1(evtPos: Position) {
-    const pos = this.calculSoundsPosition(
-      Player.getInstance.getPosition,
-      evtPos
-    );
     this.animal1.play();
-    this.animal1.pos(pos.x, pos.y, 0);
+    this.changeAnimal1(evtPos);
   }
+
+  changeAnimal1(evtPos: Position) {
+    this.setPosition(this.animal1, Player.getInstance.getPosition, evtPos);
+  }
+
   playAnimal2(evtPos: Position) {
-    const pos = this.calculSoundsPosition(
-      Player.getInstance.getPosition,
-      evtPos
-    );
-    this.animal1.play();
-    this.animal1.pos(pos.x, pos.y, 0);
+    this.animal2.play();
+    this.changeAnimal2(evtPos);
   }
+
+  changeAnimal2(evtPos: Position) {
+    this.setPosition(this.animal2, Player.getInstance.getPosition, evtPos);
+  }
+
   playAnimal3(evtPos: Position) {
-    const pos = this.calculSoundsPosition(
-      Player.getInstance.getPosition,
-      evtPos
-    );
-    this.animal1.play();
-    this.animal1.pos(pos.x, pos.y, 0);
+    this.animal3.play();
+    this.changeAnimal3(evtPos);
   }
+  changeAnimal3(evtPos: Position) {
+    this.setPosition(this.animal3, Player.getInstance.getPosition, evtPos);
+  }
+
   playAnimalDialog1() {
     this.animal1dialog.play();
   }
+
   playAnimalDialog2() {
     this.animal2dialog.play();
   }
+
   playAnimalDialog3() {
     this.animal3dialog.play();
   }
+
   progressing() {
     this._progress += 1;
   }
+
   get progress() {
     return this._progress;
   }

@@ -32,8 +32,6 @@ export class MapWithReader extends Reader {
 
   volumeCalculator(p1: Position, p2: Position) {}
 
-  tripleClick() {}
-
   update(): void {
     super.update();
     this.checkMove();
@@ -54,6 +52,7 @@ export class MapWithReader extends Reader {
     if (this.moves != this.moveTimes) {
       speak(this.position.toString());
       this.allEvents.moveToPlayer();
+      this.allEvents.changeSounds();
       this.checkEvent();
       this.moves++;
     }

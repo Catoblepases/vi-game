@@ -46,18 +46,7 @@ export class AllEvents {
   }
 
   deleteEvent(event: REvent, position: Position) {
-    const key = position.toString();
-    const value: REvent[] = this.events.get(key);
-    this.events.set(
-      position.toString(),
-      value.filter((val, index) => {
-        if (val === event) {
-          false;
-        } else {
-          true;
-        }
-      })
-    );
+    this.events.get(position.toString()).shift();
   }
 
   getEvents(position: Position) {
@@ -74,8 +63,17 @@ export class AllEvents {
   playSounds() {
     console.log("try to play sounds.");
     this.events.forEach((value, pos) => {
-      value.forEach((value, index) => {
-        value.playSound(Position.ofString(pos));
+      value.forEach((val, index) => {
+        val.playSound(Position.ofString(pos));
+      });
+    });
+  }
+
+  changeSounds() {
+    console.log("try to change sounds.");
+    this.events.forEach((value, pos) => {
+      value.forEach((val, index) => {
+        val.changeSound(Position.ofString(pos));
       });
     });
   }

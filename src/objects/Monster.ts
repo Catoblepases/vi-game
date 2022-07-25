@@ -30,7 +30,10 @@ export class Monster extends REvent {
 
   changeSound() {
     console.log("monster:changeSound");
-
+    console.log("playsoundsofmonster");
+    console.log(
+      "player:" + Player.getInstance.getPosition + "  monster:" + this.position
+    );
     switch (this.id) {
       case 0:
         Sounds.getInstance.changeMonsterA(this.position);
@@ -64,19 +67,16 @@ export class Monster extends REvent {
     allevents.deleteEvent(this, this.position);
     const dx = playerPosition.x - this.position.x;
     const dy = playerPosition.y - this.position.y;
-    if (dx > 0) {
-      this.position.moveDown();
-    } else if (dx < 0) {
-      this.position.moveUp();
-    }
     if (dy > 0) {
-      this.position.moveLeft();
+      this.position.moveUp();
     } else if (dy < 0) {
+      this.position.moveDown();
+    } else if (dx > 0) {
       this.position.moveRight();
+    } else if (dx < 0) {
+      this.position.moveLeft();
     }
     allevents.addEvent(this, this.position);
     this.changeSound();
-    console.log("playsoundsofmonster");
-    console.log("player:" + playerPosition + "  monster:" + this.position);
   }
 }
