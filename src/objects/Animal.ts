@@ -6,6 +6,7 @@ import { Sounds } from "./Sounds";
 export class Animal extends REvent {
   static cpt: number = 0;
   private id: number;
+  private position: Position;
   changeSound(position: Position) {
     console.log("playsoundsofanimal");
     console.log(
@@ -43,20 +44,21 @@ export class Animal extends REvent {
   do() {
     switch (this.id) {
       case 0:
-        
+
         break;
       case 1:
-        
+
         break;
       case 2:
-        
+
         break;
       default:
         break;
     }
   }
-  constructor() {
+  constructor(position: Position) {
     super({ event: EventType.Animal });
     this.id = Animal.cpt++;
+    this.position = position;
   }
 }
