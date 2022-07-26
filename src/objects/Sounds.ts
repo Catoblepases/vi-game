@@ -48,8 +48,10 @@ export class Sounds {
   private animal1: Howl;
   private animal2: Howl;
   private animal3: Howl;
-  private animal1dialog: Howl;
-  private animal2dialog: Howl;
+  private animal11dialog: Howl;
+  private animal12dialog: Howl;
+  private animal21dialog: Howl;
+  private animal22dialog: Howl;
   private animal3dialog: Howl;
 
   private hitSound: Howl;
