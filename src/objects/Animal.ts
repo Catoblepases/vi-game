@@ -31,10 +31,10 @@ export class Animal extends REvent {
         Sounds.getInstance.playAnimal1(position);
         break;
       case 1:
-        Sounds.getInstance.playAnimal1(position);
+        Sounds.getInstance.playAnimal2(position);
         break;
       case 2:
-        Sounds.getInstance.playAnimal1(position);
+        Sounds.getInstance.playAnimal3(position);
         break;
       default:
         break;

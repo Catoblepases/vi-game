@@ -9,6 +9,7 @@ import { MapWithReader } from "../utils/map";
 import { Monster } from "../objects/Monster";
 
 export class AdventureScene extends MapWithReader {
+  private initScene: boolean = false;
   constructor() {
     super("AdventureScene");
     this.allEvents = new AllEvents({});
@@ -23,6 +24,7 @@ export class AdventureScene extends MapWithReader {
 
   init(data: any): void {
     super.init(data);
+    this.initScene = data.init;
   }
 
   preload(): void {
