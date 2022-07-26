@@ -129,6 +129,7 @@ export class OpenScene extends Reader {
       case 14:
         this.scene.start("AdventureScene", {
           player: this.player,
+          init: true,
         });
         break;
       default:
