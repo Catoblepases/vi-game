@@ -156,8 +156,8 @@ export class Sounds {
     this.monsterC = this.createContinueObjectSound("./sounds/monster.wav");
 
     this.animal1 = this.createContinueObjectSound("./sounds/squirrel.wav");
-    this.animal2 = this.createContinueObjectSound("./sounds/animal2.wav");
-    this.animal3 = this.createContinueObjectSound("./sounds/animal3.wav");
+    this.animal2 = this.createContinueObjectSound("./sounds/hedgehog.wav");
+    this.animal3 = this.createContinueObjectSound("./sounds/rabbit.wav");
 
     this.onGetFood = this.createSoundEffect("./sounds/collectSuccess.wav");
     this.onGetEtherResources = this.createSoundEffect(
