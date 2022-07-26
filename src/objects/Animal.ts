@@ -41,16 +41,20 @@ export class Animal extends REvent {
         break;
     }
   }
+
+  get getId() {
+    return this.id;
+  }
   do() {
     switch (this.id) {
       case 0:
-
+        Sounds.getInstance.playAnimal1(Player.getInstance.getPosition);
         break;
       case 1:
-
+        Sounds.getInstance.playAnimal2(Player.getInstance.getPosition);
         break;
       case 2:
-
+        Sounds.getInstance.playAnimal3(Player.getInstance.getPosition);
         break;
       default:
         break;
