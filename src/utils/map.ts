@@ -50,10 +50,8 @@ export class MapWithReader extends Reader {
     switch (evt.getEventType()) {
       case EventType.Animal:
         if ((evt as Animal).getId != 2) {
-          this.allEvents.addEvent(
-            new Animal(),
-            Position.createRandomPosition()
-          );
+          const pos = Position.createRandomPosition();
+          this.allEvents.addEvent(new Animal(pos), pos);
         }
         break;
       default:
@@ -71,7 +69,7 @@ export class MapWithReader extends Reader {
       this.checkEvent();
       this.moves++;
     }
-    var hitOrNot = false;
+    var hitOrNot = true;
     if (Phaser.Input.Keyboard.JustDown(this.leftKey)) {
       hitOrNot = this.position.moveLeft();
       speak("move left");
@@ -91,7 +89,7 @@ export class MapWithReader extends Reader {
     } else {
       return;
     }
-    if (hitOrNot) {
+    if (!hitOrNot) {
       Sounds.getInstance.playHitSound();
       hitOrNot = false;
     }

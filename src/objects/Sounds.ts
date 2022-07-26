@@ -234,7 +234,7 @@ export class Sounds {
       this.animal2dialog,
       this.animal3dialog,
     ];
-    Howl.stop();
+    howler.stop();
     this.playNormalBgm();
     if (this.bgm) {
       this.bgm.volume(0.2);
@@ -294,6 +294,9 @@ export class Sounds {
     this.changeMonsterA(evtPos);
   }
   changeMonsterA(evtPos: Position) {
+    if (!this.monsterA.playing()) {
+      this.monsterA.play();
+    }
     this.setPosition(this.monsterA, Player.getInstance.getPosition, evtPos);
   }
   playMonsterB(evtPos: Position) {
@@ -319,6 +322,9 @@ export class Sounds {
   }
 
   changeAnimal1(evtPos: Position) {
+    if (!this.animal1.playing()) {
+      this.animal1.play();
+    }
     this.setPosition(this.animal1, Player.getInstance.getPosition, evtPos);
   }
 
@@ -328,6 +334,9 @@ export class Sounds {
   }
 
   changeAnimal2(evtPos: Position) {
+    if (!this.animal2.playing()) {
+      this.animal2.play();
+    }
     this.setPosition(this.animal2, Player.getInstance.getPosition, evtPos);
   }
 
@@ -336,6 +345,9 @@ export class Sounds {
     this.changeAnimal3(evtPos);
   }
   changeAnimal3(evtPos: Position) {
+    if (!this.animal3.playing()) {
+      this.animal3.play();
+    }
     this.setPosition(this.animal3, Player.getInstance.getPosition, evtPos);
   }
 
