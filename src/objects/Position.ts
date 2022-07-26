@@ -1,4 +1,6 @@
 import { CONST } from "../const/const";
+import { randomNumber } from "../utils/random";
+import { Sounds } from "./Sounds";
 
 export class Position {
   private _x: number;
@@ -35,6 +37,13 @@ export class Position {
     return "(" + this.x + "," + this.y + ")";
   }
 
+  static createRandomPosition() {
+    return new Position(
+      randomNumber(0, CONST.MAP_SIZE),
+      randomNumber(0, CONST.MAP_SIZE)
+    );
+  }
+
   moveUp(): boolean {
     if (this.y < CONST.MAP_SIZE - 1) {
       this.y = this.y + 1;
@@ -46,6 +55,10 @@ export class Position {
 
   distance() {
     return this.x * this.x + this.y * this.y;
+  }
+
+  hitObstacle() {
+    Sounds.getInstance.playHitSound();
   }
 
   moveDown(): boolean {

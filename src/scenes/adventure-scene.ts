@@ -24,7 +24,9 @@ export class AdventureScene extends MapWithReader {
 
   init(data: any): void {
     super.init(data);
-    this.initScene = data.init;
+    if (data.init) {
+      this.initScene = data.init;
+    }
   }
 
   preload(): void {
@@ -36,5 +38,10 @@ export class AdventureScene extends MapWithReader {
   update(): void {
     super.update();
     this.checkEvent();
+  }
+
+
+  initScenePlay(){
+
   }
 }

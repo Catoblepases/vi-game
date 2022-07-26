@@ -4,6 +4,9 @@ import { speak } from "./menu-reader";
 import { AllEvents } from "../objects/AllEvents";
 import { Position } from "../objects/Position";
 import { Reader } from "./reader";
+import { EventType } from "../objects/REvent";
+import { Animal } from "../objects/Animal";
+import { Sounds } from "../objects/Sounds";
 
 export class MapWithReader extends Reader {
   protected allEvents: AllEvents;
@@ -44,6 +47,18 @@ export class MapWithReader extends Reader {
     }
     const evt = events[0];
     speak(evt.toString());
+    switch (evt.getEventType()) {
+      case EventType.Animal:
+        if ((evt as Animal).getId != 2) {
+          this.allEvents.addEvent(
+            new Animal(),
+            Position.createRandomPosition()
+          );
+        }
+        break;
+      default:
+        break;
+    }
     evt.do();
     evt.stopEvent(this.allEvents, this.position);
   }
@@ -56,24 +71,29 @@ export class MapWithReader extends Reader {
       this.checkEvent();
       this.moves++;
     }
+    var hitOrNot = false;
     if (Phaser.Input.Keyboard.JustDown(this.leftKey)) {
-      this.position.moveLeft();
+      hitOrNot = this.position.moveLeft();
       speak("move left");
       this.moveTimes++;
     } else if (Phaser.Input.Keyboard.JustDown(this.rightKey)) {
-      this.position.moveRight();
+      hitOrNot = this.position.moveRight();
       speak("move right");
       this.moveTimes++;
     } else if (Phaser.Input.Keyboard.JustDown(this.downKey)) {
-      this.position.moveDown();
+      hitOrNot = this.position.moveDown();
       this.moveTimes++;
       speak("move down");
     } else if (Phaser.Input.Keyboard.JustDown(this.upKey)) {
-      this.position.moveUp();
+      hitOrNot = this.position.moveUp();
       this.moveTimes++;
       speak("move up");
     } else {
       return;
+    }
+    if (hitOrNot) {
+      Sounds.getInstance.playHitSound();
+      hitOrNot = false;
     }
   }
 }

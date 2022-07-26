@@ -1,4 +1,5 @@
 import { howler, Howl } from "howler";
+import { Sound } from "phaser";
 import { CONST } from "../const/const";
 import { AllEvents } from "./AllEvents";
 import { Player } from "./Player";
@@ -10,6 +11,7 @@ export function delay(ms: number) {
 
 export class Sounds {
   private static _instance?: Sounds; // Declare private static properties, store single instances
+  private footstep: Howl;
 
   static get getInstance() {
     // get this single instance by the get method, if there is no instance object created, if there is, then return this instance object directly
@@ -49,6 +51,10 @@ export class Sounds {
   private animal1dialog: Howl;
   private animal2dialog: Howl;
   private animal3dialog: Howl;
+
+  private hitSound: Howl;
+  private ivyWoo: Howl;
+  private sucessSound: Howl;
 
   private onGetFood: Howl;
   private onGetEtherResources: Howl;
@@ -130,6 +136,11 @@ export class Sounds {
     this.animal2dialog = this.createDialog("./sounds/animal2dialog.wav");
     this.animal3dialog = this.createDialog("./sounds/animal3dialog.wav");
 
+    this.hitSound = this.createSoundEffect("./sounds/hit.wav");
+    this.ivyWoo = this.createSoundEffect("./sounds/ivy_woo.wav");
+    this.footstep = this.createSoundEffect("./sounds/footstep.wav");
+    this.sucessSound = this.createSoundEffect("./sounds/collectSuccess.wav");
+
     this.voiceover01 = this.createDialog("./sounds/voiceover01.wav");
     this.voiceover02 = this.createDialog("./sounds/voiceover02.wav");
     this.voiceover03 = this.createDialog("./sounds/voiceover03.wav");
@@ -177,6 +188,13 @@ export class Sounds {
     }
   }
 
+  playHitSound() {
+    this.hitSound.play();
+    setTimeout(() => {
+      this.ivyWoo.play();
+    }, 500);
+  }
+
   changeToForest() {
     if (this.bgm && this.bgm.playing()) {
       this.bgm.fade(0.5);
@@ -191,6 +209,37 @@ export class Sounds {
     }
     this.bgm = this.villageBgm;
     this.playNormalBgm();
+  }
+  successGesture() {
+    this.sucessSound.play();
+  }
+
+  repeatDialog() {
+    const dialogs = [
+      this.dialog01,
+      this.voiceover01,
+      this.voiceover02,
+      this.dialog02,
+      this.voiceover03,
+      this.dialog03,
+      this.voiceover04_1,
+      this.voiceover04_2,
+      this.voiceover04_3,
+      this.dialog04,
+      this.voiceover05,
+      this.dialog05,
+      this.voiceover06,
+      this.dialog06,
+      this.animal1dialog,
+      this.animal2dialog,
+      this.animal3dialog,
+    ];
+    Howl.stop();
+    this.playNormalBgm();
+    if (this.bgm) {
+      this.bgm.volume(0.2);
+    }
+    dialogs[this.progress - 1].play();
   }
 
   playDialog() {
@@ -213,10 +262,10 @@ export class Sounds {
       this.animal2dialog,
       this.animal3dialog,
     ];
-    var play: boolean = this.bools[this.progress];
+    var play: boolean = this.bools[this.progress] && dialogs[this.progress];
     for (let i = 0; i < dialogs.length; i++) {
       const sound = dialogs[i];
-      if (sound.playing()) {
+      if (sound && sound.playing()) {
         play = false;
       }
     }

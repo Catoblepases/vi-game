@@ -4,6 +4,7 @@ import { collectEther, collectFood, REvent } from "../objects/REvent";
 import { AllEvents } from "../objects/AllEvents";
 import { Sounds } from "../objects/Sounds";
 import { Reader } from "../utils/reader";
+import { Player } from "../objects/Player";
 
 export class OpenScene extends Reader {
   private process = 0;
@@ -12,7 +13,9 @@ export class OpenScene extends Reader {
     super("OpenScene");
   }
 
-  proload() {}
+  proload() {
+    Player.getInstance;
+  }
 
   init(data: any): void {
     super.init(data);
@@ -23,10 +26,11 @@ export class OpenScene extends Reader {
   update(): void {
     super.update();
     if (this.isOnRepeatButton()) {
-      Sounds.getInstance.playDialog();
+      Sounds.getInstance.repeatDialog();
       this.unConfirm();
     } else if (Phaser.Input.Keyboard.JustDown(this.rightKey)) {
       Howler.stop();
+      Sounds.getInstance.playNormalBgm();
       Sounds.getInstance.progress = Sounds.getInstance.progress + 1;
     }
     switch (this.process) {
@@ -123,12 +127,13 @@ export class OpenScene extends Reader {
         // dialog06
         Sounds.getInstance.playDialog();
         if (Sounds.getInstance.progress === 14) {
+          console.log("progess: 14!!!!!");
           this.process++;
         }
         break;
       case 14:
         this.scene.start("AdventureScene", {
-          player: this.player,
+          player: Player.getInstance,
           init: true,
         });
         break;
