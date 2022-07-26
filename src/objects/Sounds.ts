@@ -132,8 +132,10 @@ export class Sounds {
     this.dialog04 = this.createDialog("./sounds/dialog04.wav");
     this.dialog05 = this.createDialog("./sounds/dialog05.wav");
     this.dialog06 = this.createDialog("./sounds/dialog06.wav");
-    this.animal1dialog = this.createDialog("./sounds/animal1dialog.wav");
-    this.animal2dialog = this.createDialog("./sounds/animal2dialog.wav");
+    this.animal11dialog = this.createDialog("./sounds/animal1dialog1.wav");
+    this.animal12dialog = this.createDialog("./sounds/animal1dialog2.wav");
+    this.animal21dialog = this.createDialog("./sounds/animal2dialog1.wav");
+    this.animal22dialog = this.createDialog("./sounds/animal2dialog2.wav");
     this.animal3dialog = this.createDialog("./sounds/animal3dialog.wav");
 
     this.hitSound = this.createSoundEffect("./sounds/hit.wav");
