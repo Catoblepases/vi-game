@@ -22,6 +22,13 @@ export class OpenScene extends Reader {
 
   update(): void {
     super.update();
+    if (this.isOnRepeatButton()) {
+      Sounds.getInstance.playDialog();
+      this.unConfirm();
+    } else if (Phaser.Input.Keyboard.JustDown(this.rightKey)) {
+      Howler.stop();
+      Sounds.getInstance.progress = Sounds.getInstance.progress + 1;
+    }
     switch (this.process) {
       case 0:
         Sounds.getInstance.playDialog();
@@ -115,7 +122,7 @@ export class OpenScene extends Reader {
         // voiceover06
         // dialog06
         Sounds.getInstance.playDialog();
-        if (Sounds.getInstance.progress === 15) {
+        if (Sounds.getInstance.progress === 14) {
           this.process++;
         }
         break;

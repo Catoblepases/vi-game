@@ -55,6 +55,8 @@ export class Sounds {
 
   private _progress: number;
 
+  private bools: boolean[];
+
   calculSoundsPosition(playPos: Position, evtPos: Position) {
     return new Position(
       (evtPos.x - playPos.x) * CONST.SOUND_DISTANCE_MULTIPLIER,
@@ -82,7 +84,7 @@ export class Sounds {
       src: [filename],
       volume: 0.7,
       loop: false,
-      rate: 1,
+      rate: 2,
       onplay: () => {
         console.log("progress: " + this.progress + " play " + filename);
       },
@@ -114,6 +116,10 @@ export class Sounds {
 
   constructor() {
     this._progress = 0;
+    this.bools = [];
+    for (let i = 0; i < 100; i++) {
+      this.bools.push(true);
+    }
     this.dialog01 = this.createDialog("./sounds/dialog01.wav");
     this.dialog02 = this.createDialog("./sounds/dialog02.wav");
     this.dialog03 = this.createDialog("./sounds/dialog03.wav");
@@ -207,16 +213,21 @@ export class Sounds {
       this.animal2dialog,
       this.animal3dialog,
     ];
+    var play: boolean = this.bools[this.progress];
     for (let i = 0; i < dialogs.length; i++) {
       const sound = dialogs[i];
       if (sound.playing()) {
-        return;
+        play = false;
       }
     }
-    if (this.bgm) {
-      this.bgm.volume(0.2);
+
+    if (play) {
+      if (this.bgm) {
+        this.bgm.volume(0.2);
+      }
+      dialogs[this.progress].play();
+      this.bools[this.progress] = false;
     }
-    dialogs[this.progress].play();
   }
 
   async playOnGetFood() {
@@ -228,6 +239,7 @@ export class Sounds {
     this.onGetEtherResources.play();
     await delay(this.onGetEtherResources.duration());
   }
+
   playMonsterA(evtPos: Position) {
     this.monsterA.play();
     this.changeMonsterA(evtPos);
@@ -296,5 +308,9 @@ export class Sounds {
 
   get progress() {
     return this._progress;
+  }
+
+  set progress(p: number) {
+    this._progress = p;
   }
 }
