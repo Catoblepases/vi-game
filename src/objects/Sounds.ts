@@ -170,9 +170,9 @@ export class Sounds {
     this.monsterB = this.createContinueObjectSound("./sounds/monster.wav");
     this.monsterC = this.createContinueObjectSound("./sounds/monster.wav");
 
-    this.animal1 = this.createContinueObjectSound("./sounds/squirrel.wav");
-    this.animal2 = this.createContinueObjectSound("./sounds/hedgehog.wav");
-    this.animal3 = this.createContinueObjectSound("./sounds/rabbit.wav");
+    this.animal1 = this.createContinueObjectSound("./sounds/animal1.wav");
+    this.animal2 = this.createContinueObjectSound("./sounds/animal2.wav");
+    this.animal3 = this.createContinueObjectSound("./sounds/animal3.wav");
 
     this.onGetFood = this.createSoundEffect("./sounds/collectSuccess.wav");
     this.onGetEtherResources = this.createSoundEffect(
@@ -234,8 +234,10 @@ export class Sounds {
       this.dialog05,
       this.voiceover06,
       this.dialog06,
-      this.animal1dialog,
-      this.animal2dialog,
+      this.animal11dialog,
+      this.animal12dialog,
+      this.animal21dialog,
+      this.animal22dialog,
       this.animal3dialog,
     ];
     Howl.stop();
@@ -262,8 +264,10 @@ export class Sounds {
       this.dialog05,
       this.voiceover06,
       this.dialog06,
-      this.animal1dialog,
-      this.animal2dialog,
+      this.animal11dialog,
+      this.animal12dialog,
+      this.animal21dialog,
+      this.animal22dialog,
       this.animal3dialog,
     ];
     var play: boolean = this.bools[this.progress] && dialogs[this.progress];
@@ -343,12 +347,20 @@ export class Sounds {
     this.setPosition(this.animal3, Player.getInstance.getPosition, evtPos);
   }
 
-  playAnimalDialog1() {
-    this.animal1dialog.play();
+  playAnimalDialog11() {
+    this.animal11dialog.play();
   }
 
-  playAnimalDialog2() {
-    this.animal2dialog.play();
+  playAnimalDialog12() {
+    this.animal12dialog.play();
+  }
+
+  playAnimalDialog21() {
+    this.animal21dialog.play();
+  }
+
+  playAnimalDialog22() {
+    this.animal22dialog.play();
   }
 
   playAnimalDialog3() {
