@@ -48,8 +48,10 @@ export class Sounds {
   private animal1: Howl;
   private animal2: Howl;
   private animal3: Howl;
-  private animal1dialog: Howl;
-  private animal2dialog: Howl;
+  private animal11dialog: Howl;
+  private animal12dialog: Howl;
+  private animal21dialog: Howl;
+  private animal22dialog: Howl;
   private animal3dialog: Howl;
 
   private hitSound: Howl;
@@ -132,8 +134,10 @@ export class Sounds {
     this.dialog04 = this.createDialog("./sounds/dialog04.wav");
     this.dialog05 = this.createDialog("./sounds/dialog05.wav");
     this.dialog06 = this.createDialog("./sounds/dialog06.wav");
-    this.animal1dialog = this.createDialog("./sounds/animal1dialog.wav");
-    this.animal2dialog = this.createDialog("./sounds/animal2dialog.wav");
+    this.animal11dialog = this.createDialog("./sounds/animal1dialog1.wav");
+    this.animal12dialog = this.createDialog("./sounds/animal1dialog2.wav");
+    this.animal21dialog = this.createDialog("./sounds/animal2dialog1.wav");
+    this.animal22dialog = this.createDialog("./sounds/animal2dialog2.wav");
     this.animal3dialog = this.createDialog("./sounds/animal3dialog.wav");
 
     this.hitSound = this.createSoundEffect("./sounds/hit.wav");
@@ -166,7 +170,7 @@ export class Sounds {
     this.monsterB = this.createContinueObjectSound("./sounds/monster.wav");
     this.monsterC = this.createContinueObjectSound("./sounds/monster.wav");
 
-    this.animal1 = this.createContinueObjectSound("./sounds/squirrel.wav");
+    this.animal1 = this.createContinueObjectSound("./sounds/animal1.wav");
     this.animal2 = this.createContinueObjectSound("./sounds/animal2.wav");
     this.animal3 = this.createContinueObjectSound("./sounds/animal3.wav");
 
@@ -230,8 +234,10 @@ export class Sounds {
       this.dialog05,
       this.voiceover06,
       this.dialog06,
-      this.animal1dialog,
-      this.animal2dialog,
+      this.animal11dialog,
+      this.animal12dialog,
+      this.animal21dialog,
+      this.animal22dialog,
       this.animal3dialog,
     ];
     howler.stop();
@@ -258,8 +264,10 @@ export class Sounds {
       this.dialog05,
       this.voiceover06,
       this.dialog06,
-      this.animal1dialog,
-      this.animal2dialog,
+      this.animal11dialog,
+      this.animal12dialog,
+      this.animal21dialog,
+      this.animal22dialog,
       this.animal3dialog,
     ];
     var play: boolean = this.bools[this.progress] && dialogs[this.progress];
@@ -351,12 +359,20 @@ export class Sounds {
     this.setPosition(this.animal3, Player.getInstance.getPosition, evtPos);
   }
 
-  playAnimalDialog1() {
-    this.animal1dialog.play();
+  playAnimalDialog11() {
+    this.animal11dialog.play();
   }
 
-  playAnimalDialog2() {
-    this.animal2dialog.play();
+  playAnimalDialog12() {
+    this.animal12dialog.play();
+  }
+
+  playAnimalDialog21() {
+    this.animal21dialog.play();
+  }
+
+  playAnimalDialog22() {
+    this.animal22dialog.play();
   }
 
   playAnimalDialog3() {
