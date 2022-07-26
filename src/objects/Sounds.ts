@@ -38,8 +38,8 @@ export class Sounds {
 
   private bgm: Howl;
 
-  private monsterA: Howl;
   //if there's different monster sound then use the other two additionals
+  private monsterA: Howl;
   private monsterB: Howl;
   private monsterC: Howl;
 
@@ -82,11 +82,16 @@ export class Sounds {
       src: [filename],
       volume: 0.7,
       loop: false,
-      onstop: () => {
+      rate: 1,
+      onplay: () => {
+        console.log("progress: " + this.progress + " play " + filename);
+      },
+      onend: () => {
         this.progressing();
         if (this.bgm) {
           this.bgm.volume(0.5);
         }
+        console.log("progress: " + this.progress + " stop " + filename);
       },
     });
   }
@@ -167,7 +172,7 @@ export class Sounds {
   }
 
   changeToForest() {
-    if (this.bgm) {
+    if (this.bgm && this.bgm.playing()) {
       this.bgm.fade(0.5);
     }
     this.bgm = this.adventureBgm;
@@ -175,7 +180,7 @@ export class Sounds {
   }
 
   changeToVillage() {
-    if (this.bgm) {
+    if (this.bgm && this.bgm.playing()) {
       this.bgm.fade(0.5);
     }
     this.bgm = this.villageBgm;
@@ -190,8 +195,13 @@ export class Sounds {
       this.dialog02,
       this.voiceover03,
       this.dialog03,
+      this.voiceover04_1,
+      this.voiceover04_2,
+      this.voiceover04_3,
       this.dialog04,
+      this.voiceover05,
       this.dialog05,
+      this.voiceover06,
       this.dialog06,
       this.animal1dialog,
       this.animal2dialog,

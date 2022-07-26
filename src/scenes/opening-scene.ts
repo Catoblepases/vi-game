@@ -1,16 +1,15 @@
 import { MapWithReader } from "../utils/map";
 import { Howler, Howl } from "howler";
-import { REvent } from "../objects/REvent";
+import { collectEther, collectFood, REvent } from "../objects/REvent";
 import { AllEvents } from "../objects/AllEvents";
 import { Sounds } from "../objects/Sounds";
+import { Reader } from "../utils/reader";
 
-export class OpenScene extends MapWithReader {
+export class OpenScene extends Reader {
   private process = 0;
+
   constructor() {
     super("OpenScene");
-    this.allEvents = new AllEvents({
-      events: [[REvent.createDefaultEvent()], [REvent.createDefaultEvent()]],
-    });
   }
 
   proload() {}
@@ -20,6 +19,7 @@ export class OpenScene extends MapWithReader {
     this.process = data.process;
     console.log(this.process);
   }
+
   update(): void {
     super.update();
     switch (this.process) {
@@ -32,53 +32,94 @@ export class OpenScene extends MapWithReader {
         break;
       case 1:
         if (Phaser.Input.Keyboard.JustDown(this.upKey)) {
-          // soundeffect01
-          // voiceover02
-          // dialog02
-          // voiceover03
           this.process++;
         }
         break;
       case 2:
-        if (Phaser.Input.Keyboard.JustDown(this.downKey)) {
-          // soundeffect02
-          // dialog03
-          // voiceover04.1
+        // soundeffect01
+        // voiceover02
+        // dialog02
+        Sounds.getInstance.playDialog();
+        if (Sounds.getInstance.progress === 4) {
           this.process++;
         }
         break;
       case 3:
-        if (this.isConfirm()) {
-          // voiceover04.2
-          this.process++;
-        }
-        break;
-      case 4:
         if (Phaser.Input.Keyboard.JustDown(this.downKey)) {
-          // voiceover04.3
           this.process++;
         }
         break;
       case 4:
-        if (this.isConfirm()) {
-          // dialog04
-          // voiceover05
-          this.player.collectFood();
-          this.unConfirm();
+        // voiceover03
+        Sounds.getInstance.playDialog();
+        if (Sounds.getInstance.progress === 6) {
           this.process++;
         }
         break;
       case 5:
-        if (this.isTripleClick()) {
-          this.player.collectEther();
-          this.unConfirm();
+        // soundeffect02
+        // dialog03
+        // voiceover04.1
+        Sounds.getInstance.playDialog();
+        if (Sounds.getInstance.progress === 8) {
           this.process++;
-          // dialog05
-          // voiceover06
-          // dialog06
         }
         break;
       case 6:
+        if (this.isConfirm()) {
+          this.unConfirm();
+          this.process++;
+        }
+        break;
+      case 7:
+        Sounds.getInstance.playDialog();
+        if (Sounds.getInstance.progress === 9) {
+          this.process++;
+        }
+        break;
+      case 8:
+        if (Phaser.Input.Keyboard.JustDown(this.downKey)) {
+          this.process++;
+        }
+        break;
+      case 9:
+        Sounds.getInstance.playDialog();
+        if (Sounds.getInstance.progress === 10) {
+          this.process++;
+        }
+        break;
+      case 10:
+        if (this.isConfirm()) {
+          new collectFood().do();
+          this.unConfirm();
+          this.process++;
+        }
+        break;
+      case 11:
+        // dialog04
+        // voiceover05
+        Sounds.getInstance.playDialog();
+        if (Sounds.getInstance.progress === 12) {
+          this.process++;
+        }
+        break;
+      case 12:
+        if (this.isTripleClick()) {
+          new collectEther().do();
+          this.unConfirm();
+          this.process++;
+        }
+        break;
+      case 13:
+        // dialog05
+        // voiceover06
+        // dialog06
+        Sounds.getInstance.playDialog();
+        if (Sounds.getInstance.progress === 15) {
+          this.process++;
+        }
+        break;
+      case 14:
         this.scene.start("AdventureScene", {
           player: this.player,
         });

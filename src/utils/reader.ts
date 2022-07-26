@@ -90,12 +90,6 @@ export class Reader extends Phaser.Scene {
   }
 
   isConfirm(): boolean {
-    console.log(
-      "isConfirm: " +
-        (this.swipeDirection == "confirm" && this.eventTriggered) ||
-        Phaser.Input.Keyboard.JustDown(this.confirmKey)
-    );
-
     return (
       (this.swipeDirection == "confirm" && this.eventTriggered) ||
       Phaser.Input.Keyboard.JustDown(this.confirmKey)
@@ -123,7 +117,8 @@ export class Reader extends Phaser.Scene {
       console.log(this.tapDurant);
     }
 
-    if (this.tapDurant > 20) {
+    if (this.tapDurant > 25) {
+      console.log("tapping times: " + this.tapTimes);
       if (this.tapTimes === 1) {
         this.repeatButton();
       } else if (this.tapTimes === 2) {
@@ -133,20 +128,26 @@ export class Reader extends Phaser.Scene {
       }
       this.tapTimes = 0;
       this.tapDurant = 0;
+      console.log("tapping times: " + this.tapTimes);
+    }
+
+    if (Phaser.Input.Keyboard.JustDown(this.clickKey)) {
+      this.tapDurant++;
+      this.tapTimes++;
+      console.log("count");
     }
 
     // touch and click
     const distanceY =
       this.input.activePointer.upY - this.input.activePointer.downY;
-
     if (
-      (!this.input.activePointer.isDown || !this.clickKey.isDown) &&
-      this.isClicking == true &&
-      this.eventTriggered == false
+      !this.input.activePointer.isDown &&
+      this.isClicking === true &&
+      this.eventTriggered === false
     ) {
       console.log(distanceY);
 
-      if (Math.abs(distanceY) < 30) {
+      if (Math.abs(distanceY) < 50) {
         this.tapTimes++;
         this.tapDurant++;
         console.log("count");
@@ -161,10 +162,7 @@ export class Reader extends Phaser.Scene {
         this.eventTriggered = true;
       }
       this.isClicking = false;
-    } else if (
-      (this.input.activePointer.isDown || this.clickKey.isDown) &&
-      this.isClicking == false
-    ) {
+    } else if (this.input.activePointer.isDown && this.isClicking == false) {
       this.isClicking = true;
     }
   }

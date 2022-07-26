@@ -6,6 +6,7 @@ import { MenuReader, speak } from "../utils/menu-reader";
 
 export class MainMenuScene extends MenuReader {
   private startKey: Phaser.Input.Keyboard.Key;
+
   constructor() {
     super(["new Game", "continue", "quit"], "MainMenuScene");
   }

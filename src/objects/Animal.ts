@@ -40,7 +40,21 @@ export class Animal extends REvent {
         break;
     }
   }
-  do() {}
+  do() {
+    switch (this.id) {
+      case 0:
+        
+        break;
+      case 1:
+        
+        break;
+      case 2:
+        
+        break;
+      default:
+        break;
+    }
+  }
   constructor() {
     super({ event: EventType.Animal });
     this.id = Animal.cpt++;
