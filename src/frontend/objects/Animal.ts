@@ -108,6 +108,14 @@ export class Animal extends MapEvent {
       case 2:
         Sounds.getInstance.animal3dialog.play();
         await delay(Sounds.getInstance.animal3dialog.duration() * 1000);
+        await delay(5000);
+        Sounds.getInstance.animal3dialog04.play();
+        await delay(Sounds.getInstance.animal3dialog04.duration() * 1000);
+        await delay(5000);
+        Sounds.getInstance.playOnGetFood();
+        await delay(500);
+        Sounds.getInstance.animal3dialog05.play();
+        await delay(Sounds.getInstance.animal3dialog05.duration() * 1000);
         break;
       default:
         break;
