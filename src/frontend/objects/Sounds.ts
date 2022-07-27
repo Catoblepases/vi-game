@@ -59,6 +59,8 @@ export class Sounds {
   readonly animal21dialog: Howl;
   readonly animal22dialog: Howl;
   readonly animal3dialog: Howl;
+  readonly animal3dialog04:Howl;
+  readonly animal3dialog05:Howl;
 
   readonly hitSound: Howl;
   readonly ivyWoo: Howl;
@@ -153,7 +155,8 @@ export class Sounds {
     this.animal12dialog = this.createDialog("./sounds/animal1dialog2.wav");
     this.animal21dialog = this.createDialog("./sounds/animal2dialog1.wav");
     this.animal22dialog = this.createDialog("./sounds/animal2dialog2.wav");
-    this.animal3dialog = this.createDialog("./sounds/animal3dialog.wav");
+    this.animal3dialog04 = this.createDialog("./sounds/animal3dialog04.wav");
+    this.animal3dialog05 = this.createDialog("./sounds/animal3dialog05final.wav");
 
     this.hitSound = this.createSoundEffect("./sounds/hit.wav");
     this.ivyWoo = this.createSoundEffect("./sounds/ivy_woo.wav");

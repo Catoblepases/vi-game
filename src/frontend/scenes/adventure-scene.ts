@@ -51,7 +51,7 @@ export class AdventureScene extends MapWithReader {
       new Position(16, 16)
     );
 
-    this.allEvents.addEvent(new Animal(new Position(7, 7)), new Position(7, 7));
+    this.allEvents.addEvent(new Animal(new Position(4, 4)), new Position(4, 4));
     // this.allEvents.addEvent(new Animal(new Position(3, 3)), new Position(3, 3));
   }
 

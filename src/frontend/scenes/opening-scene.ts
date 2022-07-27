@@ -2,7 +2,7 @@ import { MapWithReader } from "../utils/map";
 import { Howler, Howl } from "howler";
 import { collectEther, collectFood, MapEvent } from "../objects/MapEvent";
 import { AllEvents } from "../objects/AllEvents";
-import { Sounds } from "../objects/Sounds";
+import { delay, Sounds } from "../objects/Sounds";
 import { Reader } from "../utils/reader";
 import { Player } from "../objects/Player";
 
