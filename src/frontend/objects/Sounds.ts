@@ -123,7 +123,7 @@ export class Sounds {
   createSoundEffect(filename: string) {
     return new Howl({
       src: [filename],
-      volume: 0.2,
+      volume: 0.1,
       loop: false,
     });
   }
