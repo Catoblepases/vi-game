@@ -1,6 +1,7 @@
 import { CONST } from "../const/const";
-import { MenuReader, speak } from "../utils/menu-reader";
-import { randomNumber } from "../utils/random";
+import { MenuReader} from "../utils/menu-reader";
+import { speak } from "../utils/reader";
+import { randomNumber } from "../utils/basic";
 import { Position } from "./Position";
 
 export enum Policy {

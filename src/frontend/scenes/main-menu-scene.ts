@@ -2,10 +2,13 @@ import { CONST } from "../const/const";
 import { Player } from "../objects/Player";
 import { Sounds } from "../objects/Sounds";
 import { createTextAuto } from "../utils/createMenu";
-import { MenuReader, speak } from "../utils/menu-reader";
+import { MenuReader} from "../utils/menu-reader";
+import { speak } from "../utils/reader";
+
 
 export class MainMenuScene extends MenuReader {
   private startKey: Phaser.Input.Keyboard.Key;
+
   constructor() {
     super(["new Game", "continue", "quit"], "MainMenuScene");
   }
@@ -41,8 +44,9 @@ export class MainMenuScene extends MenuReader {
       console.log("confirm");
       switch (this.currentChoice) {
         case 0:
-          this.scene.start("HouseScene", {
+          this.scene.start("OpenScene", {
             player: Player.getInstance,
+            process: -1,
           });
           console.log("start");
           break;
@@ -50,7 +54,7 @@ export class MainMenuScene extends MenuReader {
           this.scene.start("HouseScene", {
             player: Player.getInstance,
           });
-          console.log("start");
+          console.log("house");
           break;
         case 2:
           this.scene.stop;

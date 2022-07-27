@@ -6,9 +6,9 @@ import { AdventureScene } from "./scenes/adventure-scene";
 import { EtherScene } from "./scenes/ether-scene";
 import { MenuReader } from "./utils/menu-reader";
 import { checkPlatform } from "./utils/check-sys";
-import GesturesPlugin from "phaser3-rex-plugins/plugins/gestures-plugin.js";
 import { Reader } from "./utils/reader";
 import { OpenScene } from "./scenes/opening-scene";
+import { TestScene } from "./scenes/test-scene";
 
 export const GameConfig: Phaser.Types.Core.GameConfig = {
   title: "RandomLand",
@@ -21,6 +21,7 @@ export const GameConfig: Phaser.Types.Core.GameConfig = {
   parent: "game",
   scene: [
     BootScene,
+    TestScene,
     MainMenuScene,
     HouseScene,
     PolicyScene,
@@ -28,18 +29,9 @@ export const GameConfig: Phaser.Types.Core.GameConfig = {
     EtherScene,
     OpenScene,
   ],
-  plugins: {
-    scene: [
-      {
-        key: "rexGestures",
-        plugin: GesturesPlugin,
-        mapping: "rexGestures",
-      },
-    ],
-  },
   input: {
     keyboard: true,
-    mouse: true,
+    mouse: false,
     touch: true,
     gamepad: false,
   },

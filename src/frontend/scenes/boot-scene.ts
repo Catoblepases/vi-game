@@ -6,6 +6,8 @@ export class BootScene extends Phaser.Scene {
   }
 
   update(): void {
+    // this.scene.start('TestScene');
     this.scene.start('MainMenuScene');
+
   }
 }

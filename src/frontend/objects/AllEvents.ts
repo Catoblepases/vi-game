@@ -1,11 +1,12 @@
-import { EventType, REvent } from "./REvent";
+import { EventType, MapEvent } from "./MapEvent";
 import { CONST } from "../const/const";
 import { Position } from "./Position";
 import { Monster } from "./Monster";
 import { Animal } from "./Animal";
+import { deleteItem } from "../utils/basic";
 
 export class AllEvents {
-  private events: Map<string, REvent[]>;
+  private events: Map<string, MapEvent[]>;
   private monsters: Monster[];
   private animals: Animal[];
 
@@ -20,7 +21,7 @@ export class AllEvents {
     this.monsters = [];
   }
 
-  addEvent(event: REvent, position: Position) {
+  addEvent(event: MapEvent, position: Position) {
     const key = position.toString();
     if (this.events.has(key)) {
       this.events.get(key)?.push(event);
@@ -33,19 +34,32 @@ export class AllEvents {
     });
     switch (event.getEventType()) {
       case EventType.Monster:
-        this.monsters.push(event as Monster);
+        if (!this.monsters.includes(event as Monster)) {
+          this.monsters.push(event as Monster);
+        }
         break;
       case EventType.Animal:
-        this.animals.push(event as Animal);
+        if (!this.animals.includes(event as Animal)) {
+          this.animals.push(event as Animal);
+        }
         break;
       default:
         break;
     }
   }
 
-  deleteEvent(event: REvent, position: Position) {
-    const key = position.toString();
-    this.events.get(key)?.shift();
+  deleteEvent(event: MapEvent, position: Position) {
+    deleteItem(event, this.events.get(position.toString())!);
+    switch (event.getEventType()) {
+      case EventType.Monster:
+        deleteItem(event as Monster, this.monsters);
+        break;
+      case EventType.Animal:
+        deleteItem(event as Animal, this.animals);
+        break;
+      default:
+        break;
+    }
   }
 
   getEvents(position: Position) {
@@ -59,10 +73,27 @@ export class AllEvents {
     }
   }
 
+  playSounds() {
+    console.log("try to play sounds.");
+    this.events.forEach((value, pos) => {
+      value.forEach((val, index) => {
+        val.playSound(Position.ofString(pos)!);
+      });
+    });
+  }
+
+  changeSounds() {
+    console.log("try to change sounds.");
+    this.events.forEach((value, pos) => {
+      value.forEach((val, index) => {
+        val.changeSound(Position.ofString(pos)!);
+      });
+    });
+  }
+
   moveToPlayer() {
-    for (let i = 0; i < this.monsters.length; i++) {
-      const item = this.monsters[i];
-      item.moveToPlayer(this);
-    }
+    this.monsters.forEach((monster, index) => {
+      monster.moveToPlayer(this);
+    });
   }
 }

@@ -13,7 +13,7 @@ export enum EventType {
   None = 0,
 }
 
-export abstract class REvent {
+export abstract class MapEvent {
   event: EventType;
 
   constructor(param: any) {
@@ -37,10 +37,6 @@ export abstract class REvent {
 
   abstract do();
 
-  stopEvent(allEvents: AllEvents, position: Position) {
-    allEvents.deleteEvent(this, position);
-  }
-
   getEventType() {
     return this.event;
   }
@@ -50,7 +46,7 @@ export abstract class REvent {
   }
 }
 
-export class NoneEvent extends REvent {
+export class NoneEvent extends MapEvent {
   constructor() {
     super({ event: EventType.None });
   }
@@ -58,7 +54,7 @@ export class NoneEvent extends REvent {
   do() {}
 }
 
-export class collectEther extends REvent {
+export class collectEther extends MapEvent {
   constructor() {
     super({ event: EventType.CollectEther });
   }
@@ -69,7 +65,7 @@ export class collectEther extends REvent {
   }
 }
 
-export class collectFood extends REvent {
+export class collectFood extends MapEvent {
   constructor() {
     super({ event: EventType.CollectFood });
   }

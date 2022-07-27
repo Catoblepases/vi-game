@@ -1,7 +1,8 @@
 import { CONST } from "../const/const";
 import { Player, Policy } from "../objects/Player";
 import { createTextAuto } from "../utils/createMenu";
-import { MenuReader, speak } from "../utils/menu-reader";
+import { MenuReader} from "../utils/menu-reader";
+import { speak } from "../utils/reader";
 
 export class PolicyScene extends MenuReader {
   private startKey: Phaser.Input.Keyboard.Key;

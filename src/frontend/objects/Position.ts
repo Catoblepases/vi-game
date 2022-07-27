@@ -1,4 +1,6 @@
 import { CONST } from "../const/const";
+import { randomNumber } from "../utils/basic";
+import { Sounds } from "./Sounds";
 
 export class Position {
   private _x: number;
@@ -23,8 +25,23 @@ export class Position {
     this.y = y;
   }
 
+  static ofString(s: string): Position | undefined {
+    let reg: RegExp = new RegExp("[0-9]", "gi");
+    let l = s.match(reg);
+    if (l && l.length === 2) {
+      return new Position(Number.parseInt(l[0]), Number.parseInt(l[1]));
+    }
+  }
+
   toString() {
     return "(" + this.x + "," + this.y + ")";
+  }
+
+  static createRandomPosition() {
+    return new Position(
+      randomNumber(0, CONST.MAP_SIZE - 1),
+      randomNumber(0, CONST.MAP_SIZE - 1)
+    );
   }
 
   moveUp(): boolean {
@@ -36,8 +53,16 @@ export class Position {
     }
   }
 
+  distance() {
+    return this.x * this.x + this.y * this.y;
+  }
+
+  hitObstacle() {
+    Sounds.getInstance.playHitSound();
+  }
+
   moveDown(): boolean {
-    if (this.y > 1) {
+    if (this.y >= 1) {
       this.y = this.y - 1;
 
       return true;
@@ -47,7 +72,7 @@ export class Position {
   }
 
   moveLeft(): boolean {
-    if (this.x > 1) {
+    if (this.x >=1) {
       this.x = this.x - 1;
 
       return true;
