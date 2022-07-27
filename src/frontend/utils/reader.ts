@@ -1,6 +1,7 @@
 import { CONST } from "../const/const";
 
 export function speak(msg: string) {
+  // window.speechSynthesis.pause();
   let ssu = new window.SpeechSynthesisUtterance();
   ssu.voice = window.speechSynthesis.getVoices()[1];
   ssu.lang = "en-US";
