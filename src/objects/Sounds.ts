@@ -1,4 +1,4 @@
-import { howler, Howl } from "howler";
+import { Howler, Howl } from "howler";
 import { Sound } from "phaser";
 import { CONST } from "../const/const";
 import { AllEvents } from "./AllEvents";
@@ -10,8 +10,8 @@ export function delay(ms: number) {
 }
 
 export class Sounds {
-  private static _instance?: Sounds; // Declare private static properties, store single instances
-  private footstep: Howl;
+  public static _instance?: Sounds; // Declare readonly static properties, store single instances
+  readonly footstep: Howl;
 
   static get getInstance() {
     // get this single instance by the get method, if there is no instance object created, if there is, then return this instance object directly
@@ -19,53 +19,62 @@ export class Sounds {
     return Sounds._instance;
   }
 
-  private dialog01: Howl;
-  private dialog02: Howl;
-  private dialog03: Howl;
-  private dialog04: Howl;
-  private dialog05: Howl;
-  private dialog06: Howl;
+  readonly audio: Howl;
 
-  private voiceover01: Howl;
-  private voiceover02: Howl;
-  private voiceover03: Howl;
-  private voiceover04_1: Howl;
-  private voiceover04_2: Howl;
-  private voiceover04_3: Howl;
-  private voiceover05: Howl;
-  private voiceover06: Howl;
+  readonly dialog01: Howl;
+  readonly dialog02: Howl;
+  readonly dialog03: Howl;
+  readonly dialog04: Howl;
+  readonly dialog05: Howl;
+  readonly dialog06: Howl;
 
-  private adventureBgm: Howl;
-  private villageBgm: Howl;
+  readonly voiceover01: Howl;
+  readonly voiceover02: Howl;
+  readonly voiceover03: Howl;
+  readonly voiceover04_1: Howl;
+  readonly voiceover04_2: Howl;
+  readonly voiceover04_3: Howl;
+  readonly voiceover05: Howl;
+  readonly voiceover06: Howl;
+
+  readonly adventureBgm: Howl;
+  readonly villageBgm: Howl;
 
   private bgm: Howl;
 
+  readonly attackInstraction: Howl;
+  readonly meetMonster: Howl;
+  readonly afterMonster: Howl;
+
   //if there's different monster sound then use the other two additionals
-  private monsterA: Howl;
-  private monsterB: Howl;
-  private monsterC: Howl;
+  readonly monsterA: Howl;
+  readonly monsterB: Howl;
+  readonly monsterC: Howl;
 
-  private animal1: Howl;
-  private animal2: Howl;
-  private animal3: Howl;
-  private animal11dialog: Howl;
-  private animal12dialog: Howl;
-  private animal21dialog: Howl;
-  private animal22dialog: Howl;
-  private animal3dialog: Howl;
+  readonly animal1: Howl;
+  readonly animal2: Howl;
+  readonly animal3: Howl;
+  readonly animal11dialog: Howl;
+  readonly animal12dialog: Howl;
+  readonly animal21dialog: Howl;
+  readonly animal22dialog: Howl;
+  readonly animal3dialog: Howl;
 
-  private hitSound: Howl;
-  private ivyWoo: Howl;
-  private sucessSound: Howl;
+  readonly hitSound: Howl;
+  readonly ivyWoo: Howl;
+  readonly sucessSound: Howl;
 
-  private onGetFood: Howl;
-  private onGetEtherResources: Howl;
+  readonly onGetFood: Howl;
+  readonly onGetEtherResources: Howl;
 
   private _progress: number;
 
-  private bools: boolean[];
+  readonly bools: boolean[];
 
-  calculSoundsPosition(playPos: Position, evtPos: Position) {
+  static calculSoundsPosition(playPos: Position, evtPos: Position) {
+    if (!playPos || !evtPos) {
+      return;
+    }
     return new Position(
       (evtPos.x - playPos.x) * CONST.SOUND_DISTANCE_MULTIPLIER,
       (evtPos.y - playPos.y) * CONST.SOUND_DISTANCE_MULTIPLIER
@@ -75,22 +84,25 @@ export class Sounds {
   volumeRate(position: Position) {
     const d =
       Math.sqrt(position.distance()) / (2 * CONST.SOUND_DISTANCE_MULTIPLIER);
-    return Math.exp(-1 * d);
+    return Math.exp(-1 * d) + 0.3;
   }
 
   setPosition(sound: Howl, playPos: Position, evtPos: Position) {
-    const position = this.calculSoundsPosition(playPos, evtPos);
-    const volume = this.volumeRate(position);
+    const position = Sounds.calculSoundsPosition(playPos, evtPos);
+    if (!position) {
+      return;
+    }
+    // const volume = this.volumeRate(position);
     sound.stop();
-    console.log(position + " " + volume);
-    sound.volume(volume);
+    console.log(position);
+    // sound.volume(volume);
     sound.pos(position.x, position.y, 0, sound.play());
   }
 
   createDialog(filename: string) {
     return new Howl({
       src: [filename],
-      volume: 0.7,
+      volume: 0.1,
       loop: false,
       rate: 1,
       onplay: () => {
@@ -99,7 +111,7 @@ export class Sounds {
       onend: () => {
         this.progressing();
         if (this.bgm) {
-          this.bgm.volume(0.5);
+          this.bgm.volume(0.1);
         }
         console.log("progress: " + this.progress + " stop " + filename);
       },
@@ -109,7 +121,7 @@ export class Sounds {
   createSoundEffect(filename: string) {
     return new Howl({
       src: [filename],
-      volume: 0.6,
+      volume: 0.2,
       loop: false,
     });
   }
@@ -118,7 +130,7 @@ export class Sounds {
     return new Howl({
       src: [filename],
       loop: true,
-      volume: 0.5,
+      volume: 1,
     });
   }
 
@@ -128,6 +140,9 @@ export class Sounds {
     for (let i = 0; i < 100; i++) {
       this.bools.push(true);
     }
+    Howler.volume(1);
+
+    this.audio = this.createDialog("./sounds/audio.wav");
     this.dialog01 = this.createDialog("./sounds/dialog01.wav");
     this.dialog02 = this.createDialog("./sounds/dialog02.wav");
     this.dialog03 = this.createDialog("./sounds/dialog03.wav");
@@ -154,15 +169,21 @@ export class Sounds {
     this.voiceover05 = this.createDialog("./sounds/voiceover05.wav");
     this.voiceover06 = this.createDialog("./sounds/voiceover06.wav");
 
+    this.meetMonster = this.createDialog("./sounds/dialog07.wav");
+    this.afterMonster = this.createDialog("./sounds/dialog08.wav");
+    this.attackInstraction = this.createDialog(
+      "./sounds/attackInstruction.wav"
+    );
+
     this.adventureBgm = new Howl({
       src: ["./sounds/forest.mp3"],
       loop: true,
-      volume: 0.5,
+      volume: 0.05,
     });
 
     this.villageBgm = new Howl({
       src: ["./sounds/hut.mp3"],
-      volume: 0.6,
+      volume: 0.4,
       loop: true,
     });
 
@@ -187,32 +208,33 @@ export class Sounds {
 
   playNormalBgm() {
     if (this.bgm) {
-      this.bgm.volume(0.3);
+      this.bgm.volume(0.1);
       this.bgm.play();
     }
   }
 
-  playHitSound() {
+  async playHitSound() {
     this.hitSound.play();
     setTimeout(() => {
       this.ivyWoo.play();
     }, 500);
+    await delay(1000);
   }
 
   changeToForest() {
     if (this.bgm && this.bgm.playing()) {
-      this.bgm.fade(0.5);
+      this.bgm.stop();
     }
     this.bgm = this.adventureBgm;
-    this.playNormalBgm();
+    this.bgm.volume(0.06);
   }
 
   changeToVillage() {
     if (this.bgm && this.bgm.playing()) {
-      this.bgm.fade(0.5);
+      this.bgm.stop();
     }
     this.bgm = this.villageBgm;
-    this.playNormalBgm();
+    this.bgm.volume(0.2);
   }
   successGesture() {
     this.sucessSound.play();
@@ -220,6 +242,7 @@ export class Sounds {
 
   repeatDialog() {
     const dialogs = [
+      this.audio,
       this.dialog01,
       this.voiceover01,
       this.voiceover02,
@@ -240,16 +263,17 @@ export class Sounds {
       this.animal22dialog,
       this.animal3dialog,
     ];
-    howler.stop();
+    Howler.stop();
     this.playNormalBgm();
     if (this.bgm) {
-      this.bgm.volume(0.2);
+      this.bgm.volume(0.05);
     }
     dialogs[this.progress - 1].play();
   }
 
   playDialog() {
     const dialogs = [
+      this.audio,
       this.dialog01,
       this.voiceover01,
       this.voiceover02,
@@ -280,7 +304,7 @@ export class Sounds {
 
     if (play) {
       if (this.bgm) {
-        this.bgm.volume(0.2);
+        this.bgm.volume(0.05);
       }
       dialogs[this.progress].play();
       this.bools[this.progress] = false;
@@ -294,7 +318,7 @@ export class Sounds {
 
   async playOnGetEtherResources() {
     this.onGetEtherResources.play();
-    await delay(this.onGetEtherResources.duration());
+    await delay(this.onGetEtherResources.duration() * 1000);
   }
 
   playMonsterA(evtPos: Position) {

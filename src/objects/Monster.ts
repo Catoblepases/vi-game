@@ -1,12 +1,12 @@
 import { CONST } from "../const/const";
-import { randomNumber } from "../utils/random";
+import { randomNumber } from "../utils/basic";
 import { AllEvents } from "./AllEvents";
 import { Player } from "./Player";
 import { Position } from "./Position";
-import { EventType, REvent } from "./REvent";
-import { Sounds } from "./Sounds";
+import { EventType, MapEvent } from "./MapEvent";
+import { delay, Sounds } from "./Sounds";
 
-export class Monster extends REvent {
+export class Monster extends MapEvent {
   static cpt: number = 0;
   private id: number;
   playSound() {
@@ -49,9 +49,34 @@ export class Monster extends REvent {
     }
   }
 
-  do() {
-    Player.getInstance.setEther = 0;
-    Player.getInstance.setFood = 0;
+  stopSound() {
+    switch (this.id) {
+      case 0:
+        Sounds.getInstance.monsterA.stop();
+        break;
+      case 1:
+        Sounds.getInstance.monsterB.stop();
+        break;
+      case 2:
+        Sounds.getInstance.monsterC.stop();
+        break;
+      default:
+        break;
+    }
+  }
+
+  async do() {
+    Sounds.getInstance.meetMonster.play();
+    await delay(Sounds.getInstance.meetMonster.duration() * 1000);
+    Sounds.getInstance.attackInstraction.play();
+    await delay(Sounds.getInstance.attackInstraction.duration() * 1000);
+
+    setTimeout(() => {
+      Sounds.getInstance.playOnGetFood();
+      Sounds.getInstance.afterMonster.play();
+      delay(Sounds.getInstance.afterMonster.duration() * 1000);
+      this.stopSound();
+    }, 10000);
   }
 
   private position: Position;

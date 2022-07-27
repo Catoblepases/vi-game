@@ -1,10 +1,11 @@
 import { CONST } from "../const/const";
 import { Player } from "../objects/Player";
-import { speak } from "./menu-reader";
+import { speak } from "../utils/reader";
+
 import { AllEvents } from "../objects/AllEvents";
 import { Position } from "../objects/Position";
 import { Reader } from "./reader";
-import { EventType } from "../objects/REvent";
+import { EventType, MapEvent } from "../objects/MapEvent";
 import { Animal } from "../objects/Animal";
 import { Sounds } from "../objects/Sounds";
 
@@ -21,6 +22,7 @@ export class MapWithReader extends Reader {
 
   init(data: any): void {
     super.init(data);
+    this.allEvents.playSounds();
     this.player = data.player;
     this.position = data.player.getPosition;
     this.moveTimes = 0;
@@ -51,22 +53,26 @@ export class MapWithReader extends Reader {
       case EventType.Animal:
         if ((evt as Animal).getId != 2) {
           const pos = Position.createRandomPosition();
-          this.allEvents.addEvent(new Animal(pos), pos);
+          const ani = new Animal(pos);
+          this.allEvents.addEvent(ani, ani.getPosition());
+          ani.playSound(ani.getPosition());
+          console.log("createAnimal:" + ani.getPosition());
         }
         break;
       default:
         break;
     }
     evt.do();
-    evt.stopEvent(this.allEvents, this.position);
+    this.allEvents.deleteEvent(evt, this.position);
   }
 
   checkMove() {
     if (this.moves != this.moveTimes) {
+      this.allEvents.playSounds();
       speak(this.position.toString());
       this.allEvents.moveToPlayer();
-      this.allEvents.changeSounds();
       this.checkEvent();
+      console.log("moves: " + this.moves);
       this.moves++;
     }
     var hitOrNot = true;
@@ -86,12 +92,10 @@ export class MapWithReader extends Reader {
       hitOrNot = this.position.moveUp();
       this.moveTimes++;
       speak("move up");
+    } else if (Phaser.Input.Keyboard.JustDown(this.clickKey)) {
+      Sounds.getInstance.playOnGetFood();
     } else {
       return;
-    }
-    if (!hitOrNot) {
-      Sounds.getInstance.playHitSound();
-      hitOrNot = false;
     }
   }
 }

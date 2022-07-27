@@ -1,5 +1,5 @@
 import { CONST } from "../const/const";
-import { randomNumber } from "../utils/random";
+import { randomNumber } from "../utils/basic";
 import { Sounds } from "./Sounds";
 
 export class Position {
@@ -39,8 +39,8 @@ export class Position {
 
   static createRandomPosition() {
     return new Position(
-      randomNumber(0, CONST.MAP_SIZE),
-      randomNumber(0, CONST.MAP_SIZE)
+      randomNumber(0, CONST.MAP_SIZE - 1),
+      randomNumber(0, CONST.MAP_SIZE - 1)
     );
   }
 
@@ -62,7 +62,7 @@ export class Position {
   }
 
   moveDown(): boolean {
-    if (this.y > 1) {
+    if (this.y >= 1) {
       this.y = this.y - 1;
 
       return true;
@@ -72,7 +72,7 @@ export class Position {
   }
 
   moveLeft(): boolean {
-    if (this.x > 1) {
+    if (this.x >=1) {
       this.x = this.x - 1;
 
       return true;
