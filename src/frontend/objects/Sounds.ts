@@ -39,6 +39,7 @@ export class Sounds {
 
   readonly adventureBgm: Howl;
   readonly villageBgm: Howl;
+  readonly BattleBossBgm: Howl;
 
   private bgm: Howl;
 
@@ -195,6 +196,12 @@ export class Sounds {
       loop: true,
     });
 
+    this.BattleBossBgm = new Howl({
+      src: ["./sounds/BattleBoss.mp3"],
+      volume: 0.3,
+      loop: true,
+    });
+
     this.monsterA = this.createContinueObjectSound("./sounds/monster.wav");
     this.monsterB = this.createContinueObjectSound("./sounds/monster.wav");
     this.monsterC = this.createContinueObjectSound("./sounds/monster.wav");
@@ -276,6 +283,15 @@ export class Sounds {
     this.bgm = this.villageBgm;
     this.bgm.volume(0.2);
   }
+
+  changeToBoss() {
+    if (this.bgm && this.bgm.playing()) {
+      this.bgm.stop();
+    }
+    this.bgm = this.BattleBossBgm;
+    this.bgm.volume(0.2);
+  }
+
   successGesture() {
     this.sucessSound.play();
   }
