@@ -131,7 +131,7 @@ export class Sounds {
       src: [filename],
       volume: 0.3,
       loop: false,
-      rate: 2,
+      rate: 2.5,
       onplay: () => {
         console.log("progress: " + this.progress + " play " + filename);
         this.silenceTheNoise();
@@ -301,7 +301,7 @@ export class Sounds {
       this.bgm.stop();
     }
     this.bgm = this.adventureBgm;
-    this.bgm.volume(0.06);
+    this.bgm.volume(0.1);
     this.bgm.play();
   }
 
