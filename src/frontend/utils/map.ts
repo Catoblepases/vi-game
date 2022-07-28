@@ -55,13 +55,7 @@ export class MapWithReader extends Reader {
       this.initScene = false;
     }
     super.update();
-    if (this.isOnRepeatButton()) {
-      Sounds.getInstance.repeatDialog();
-      this.unConfirm();
-    } else if (Phaser.Input.Keyboard.JustDown(this.rightKey)) {
-      Sounds.getInstance.playNormalBgm();
-      Sounds.getInstance.progress = Sounds.getInstance.progress + 1;
-    }
+
     switch (animalOrMonsterProgress.getInstance.progress) {
       case ProgressStory.animal1:
         if (Sounds.getInstance.progress == 17) {
@@ -93,23 +87,24 @@ export class MapWithReader extends Reader {
         break;
       case ProgressStory.BossFight:
         if (Sounds.getInstance.progress == 21) {
+          Sounds.getInstance.changeToBoss();
           animalOrMonsterProgress.getInstance.changeToBossF();
         } else {
           Sounds.getInstance.playDialog();
         }
         break;
-
       case -8:
         if (this.numClick > 20) {
           animalOrMonsterProgress.getInstance.changeAfterBoss();
-        } else if (this.isOnRepeatButton()) {
+        } else if (Phaser.Input.Keyboard.JustDown(this.clickKey)) {
           Sounds.getInstance.playOnGetFood();
           this.numClick++;
           this.unConfirm();
         }
         break;
       case ProgressStory.AfterBossFight:
-        if (Sounds.getInstance.progress == 22) {
+        if (Sounds.getInstance.progress == 21) {
+          Sounds.getInstance.changeToForest();
           animalOrMonsterProgress.getInstance.changeToNone();
         } else {
           Sounds.getInstance.playDialog();
@@ -118,6 +113,10 @@ export class MapWithReader extends Reader {
       case ProgressStory.monster:
         break;
       default:
+        if (this.isOnRepeatButton()) {
+          Sounds.getInstance.repeatDialog();
+          this.unConfirm();
+        }
         this.checkMove();
         break;
     }
