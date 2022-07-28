@@ -39,6 +39,7 @@ export class MapWithReader extends Reader {
     super.preload();
   }
   private initScene: boolean = true;
+  private progress = 0;
   initScenePlay() {
     Sounds.getInstance.animal11dialog.play();
   }
@@ -54,7 +55,6 @@ export class MapWithReader extends Reader {
       this.initScenePlay();
       this.initScene = false;
     }
-    super.update();
 
     switch (animalOrMonsterProgress.getInstance.progress) {
       case ProgressStory.animal1:
@@ -103,7 +103,7 @@ export class MapWithReader extends Reader {
         }
         break;
       case ProgressStory.AfterBossFight:
-        if (Sounds.getInstance.progress == 21) {
+        if (Sounds.getInstance.progress == 22) {
           Sounds.getInstance.changeToForest();
           animalOrMonsterProgress.getInstance.changeToNone();
         } else {
@@ -113,10 +113,7 @@ export class MapWithReader extends Reader {
       case ProgressStory.monster:
         break;
       default:
-        if (this.isOnRepeatButton()) {
-          Sounds.getInstance.repeatDialog();
-          this.unConfirm();
-        }
+        super.update();
         this.checkMove();
         break;
     }

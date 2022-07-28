@@ -75,7 +75,7 @@ export class Monster extends MapEvent {
       Sounds.getInstance.playOnGetFood();
       Sounds.getInstance.afterMonster.play();
       delay(Sounds.getInstance.afterMonster.duration() * 1000);
-      this.stopSound();
+      Sounds.getInstance.monsterA.mute();
     }, 10000);
   }
 

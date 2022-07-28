@@ -111,7 +111,7 @@ export class Sounds {
       src: [filename],
       volume: 0.3,
       loop: false,
-      rate: 1,
+      rate: 2,
       onplay: () => {
         animalOrMonsterProgress.getInstance.SyncProgress();
         console.log("progress: " + this.progress + " play " + filename);
@@ -119,6 +119,23 @@ export class Sounds {
       },
       onend: () => {
         this.progressing();
+        this.normaliseTheNoise();
+        console.log("progress: " + this.progress + " stop " + filename);
+      },
+    });
+  }
+
+  createDialogOut(filename: string) {
+    return new Howl({
+      src: [filename],
+      volume: 0.3,
+      loop: false,
+      rate: 2,
+      onplay: () => {
+        console.log("progress: " + this.progress + " play " + filename);
+        this.silenceTheNoise();
+      },
+      onend: () => {
         this.normaliseTheNoise();
         console.log("progress: " + this.progress + " stop " + filename);
       },
@@ -178,9 +195,9 @@ export class Sounds {
     this.voiceover05 = this.createDialog("./sounds/voiceover05.wav");
     this.voiceover06 = this.createDialog("./sounds/voiceover06.wav");
 
-    this.meetMonster = this.createDialog("./sounds/dialog07.wav");
-    this.afterMonster = this.createDialog("./sounds/dialog08.wav");
-    this.attackInstraction = this.createDialog(
+    this.meetMonster = this.createDialogOut("./sounds/dialog07.wav");
+    this.afterMonster = this.createDialogOut("./sounds/dialog08.wav");
+    this.attackInstraction = this.createDialogOut(
       "./sounds/attackInstruction.wav"
     );
 
@@ -278,6 +295,7 @@ export class Sounds {
     }
     this.bgm = this.adventureBgm;
     this.bgm.volume(0.06);
+    this.bgm.play();
   }
 
   changeToVillage() {
@@ -286,6 +304,7 @@ export class Sounds {
     }
     this.bgm = this.villageBgm;
     this.bgm.volume(0.2);
+    this.bgm.play();
   }
 
   changeToBoss() {
@@ -294,6 +313,7 @@ export class Sounds {
     }
     this.bgm = this.BattleBossBgm;
     this.bgm.volume(0.2);
+    this.bgm.play();
   }
 
   successGesture() {
@@ -361,7 +381,7 @@ export class Sounds {
   normaliseTheNoise() {
     for (let i = 0; i < this.continueObjects.length; i++) {
       const element = this.continueObjects[i];
-      element.volume(0.6);
+      element.volume(1);
     }
     for (let i = 0; i < this.soundEffects.length; i++) {
       const element = this.soundEffects[i];
