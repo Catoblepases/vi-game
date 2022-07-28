@@ -59,8 +59,8 @@ export class Sounds {
   readonly animal21dialog: Howl;
   readonly animal22dialog: Howl;
   readonly animal3dialog: Howl;
-  readonly animal3dialog04:Howl;
-  readonly animal3dialog05:Howl;
+  readonly animal3dialog04: Howl;
+  readonly animal3dialog05: Howl;
 
   readonly hitSound: Howl;
   readonly ivyWoo: Howl;
@@ -70,6 +70,9 @@ export class Sounds {
   readonly onGetEtherResources: Howl;
 
   private _progress: number;
+  private dialogs: Howl[];
+  private soundEffects: Howl[];
+  private continueObjects: Howl[];
 
   readonly bools: boolean[];
 
@@ -156,7 +159,9 @@ export class Sounds {
     this.animal21dialog = this.createDialog("./sounds/animal2dialog1.wav");
     this.animal22dialog = this.createDialog("./sounds/animal2dialog2.wav");
     this.animal3dialog04 = this.createDialog("./sounds/animal3dialog04.wav");
-    this.animal3dialog05 = this.createDialog("./sounds/animal3dialog05final.wav");
+    this.animal3dialog05 = this.createDialog(
+      "./sounds/animal3dialog05final.wav"
+    );
 
     this.hitSound = this.createSoundEffect("./sounds/hit.wav");
     this.ivyWoo = this.createSoundEffect("./sounds/ivy_woo.wav");
@@ -202,6 +207,38 @@ export class Sounds {
     this.onGetEtherResources = this.createSoundEffect(
       "./sounds/collectEther.wav"
     );
+
+    this.dialogs = [
+      this.audio,
+      this.dialog01,
+      this.voiceover01,
+      this.voiceover02,
+      this.dialog02,
+      this.voiceover03,
+      this.dialog03,
+      this.voiceover04_1,
+      this.voiceover04_2,
+      this.voiceover04_3,
+      this.dialog04,
+      this.voiceover05,
+      this.dialog05,
+      this.voiceover06,
+      this.dialog06,
+      this.animal11dialog,
+      this.animal12dialog,
+      this.animal21dialog,
+      this.animal22dialog,
+      this.animal3dialog,
+    ];
+
+    this.continueObjects = [
+      this.monsterA,
+      this.monsterB,
+      this.monsterC,
+      this.animal1,
+      this.animal2,
+      this.animal3,
+    ];
   }
 
   openning() {
@@ -244,62 +281,19 @@ export class Sounds {
   }
 
   repeatDialog() {
-    const dialogs = [
-      this.audio,
-      this.dialog01,
-      this.voiceover01,
-      this.voiceover02,
-      this.dialog02,
-      this.voiceover03,
-      this.dialog03,
-      this.voiceover04_1,
-      this.voiceover04_2,
-      this.voiceover04_3,
-      this.dialog04,
-      this.voiceover05,
-      this.dialog05,
-      this.voiceover06,
-      this.dialog06,
-      this.animal11dialog,
-      this.animal12dialog,
-      this.animal21dialog,
-      this.animal22dialog,
-      this.animal3dialog,
-    ];
     Howler.stop();
     this.playNormalBgm();
     if (this.bgm) {
       this.bgm.volume(0.05);
     }
-    dialogs[this.progress - 1].play();
+    this.dialogs[this.progress - 1].play();
   }
 
   playDialog() {
-    const dialogs = [
-      this.audio,
-      this.dialog01,
-      this.voiceover01,
-      this.voiceover02,
-      this.dialog02,
-      this.voiceover03,
-      this.dialog03,
-      this.voiceover04_1,
-      this.voiceover04_2,
-      this.voiceover04_3,
-      this.dialog04,
-      this.voiceover05,
-      this.dialog05,
-      this.voiceover06,
-      this.dialog06,
-      this.animal11dialog,
-      this.animal12dialog,
-      this.animal21dialog,
-      this.animal22dialog,
-      this.animal3dialog,
-    ];
-    var play: boolean = this.bools[this.progress] && dialogs[this.progress];
-    for (let i = 0; i < dialogs.length; i++) {
-      const sound = dialogs[i];
+    var play: boolean =
+      this.bools[this.progress] && this.dialogs[this.progress];
+    for (let i = 0; i < this.dialogs.length; i++) {
+      const sound = this.dialogs[i];
       if (sound && sound.playing()) {
         play = false;
       }
@@ -309,9 +303,33 @@ export class Sounds {
       if (this.bgm) {
         this.bgm.volume(0.05);
       }
-      dialogs[this.progress].play();
+      this.dialogs[this.progress].play();
       this.bools[this.progress] = false;
     }
+  }
+
+  silenceTheNoise() {
+    for (let i = 0; i < this.continueObjects.length; i++) {
+      const element = this.continueObjects[i];
+      element.volume(0.1);
+    }
+    for (let i = 0; i < this.soundEffects.length; i++) {
+      const element = this.soundEffects[i];
+      element.volume(0.1);
+    }
+    this.bgm.volume(0.1);
+  }
+
+  normaliseTheNoise() {
+    for (let i = 0; i < this.continueObjects.length; i++) {
+      const element = this.continueObjects[i];
+      element.volume(0.6);
+    }
+    for (let i = 0; i < this.soundEffects.length; i++) {
+      const element = this.soundEffects[i];
+      element.volume(0.6);
+    }
+    this.bgm.volume(0.6);
   }
 
   async playOnGetFood() {
@@ -384,26 +402,6 @@ export class Sounds {
       this.animal3.play();
     }
     this.setPosition(this.animal3, Player.getInstance.getPosition, evtPos);
-  }
-
-  playAnimalDialog11() {
-    this.animal11dialog.play();
-  }
-
-  playAnimalDialog12() {
-    this.animal12dialog.play();
-  }
-
-  playAnimalDialog21() {
-    this.animal21dialog.play();
-  }
-
-  playAnimalDialog22() {
-    this.animal22dialog.play();
-  }
-
-  playAnimalDialog3() {
-    this.animal3dialog.play();
   }
 
   progressing() {

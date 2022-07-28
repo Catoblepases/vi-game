@@ -1,7 +1,11 @@
 import { CONST } from "../const/const";
 
 export function speak(msg: string) {
-  window.speechSynthesis.pause();
+  if (window.speechSynthesis.speaking) {
+    window.speechSynthesis.pause();
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.resume();
+  }
   let ssu = new window.SpeechSynthesisUtterance();
   ssu.voice = window.speechSynthesis.getVoices()[1];
   ssu.lang = "en-US";
@@ -71,7 +75,7 @@ export class Reader extends Phaser.Scene {
     );
   }
 
-  create() { }
+  create() {}
 
   confirmButton() {
     this.swipeDirection = "confirm";
