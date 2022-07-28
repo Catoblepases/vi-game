@@ -2,6 +2,7 @@ import { Howler, Howl } from "howler";
 import { Sound } from "phaser";
 import { CONST } from "../const/const";
 import { AllEvents } from "./AllEvents";
+import { animalOrMonsterProgress } from "./animalOrMonsterProgress";
 import { Player } from "./Player";
 import { Position } from "./Position";
 
@@ -81,8 +82,8 @@ export class Sounds {
       return;
     }
     return new Position(
-      (evtPos.x - playPos.x) * CONST.SOUND_DISTANCE_MULTIPLIER,
-      (evtPos.y - playPos.y) * CONST.SOUND_DISTANCE_MULTIPLIER
+      (-1 * evtPos.x + playPos.x) * CONST.SOUND_DISTANCE_MULTIPLIER,
+      (-1 * evtPos.y + playPos.y) * CONST.SOUND_DISTANCE_MULTIPLIER
     );
   }
 
@@ -107,17 +108,17 @@ export class Sounds {
   createDialog(filename: string) {
     return new Howl({
       src: [filename],
-      volume: 0.1,
+      volume: 0.3,
       loop: false,
       rate: 1,
       onplay: () => {
+        animalOrMonsterProgress.getInstance.SyncProgress();
         console.log("progress: " + this.progress + " play " + filename);
+        this.silenceTheNoise();
       },
       onend: () => {
         this.progressing();
-        if (this.bgm) {
-          this.bgm.volume(0.1);
-        }
+        this.normaliseTheNoise();
         console.log("progress: " + this.progress + " stop " + filename);
       },
     });
@@ -145,8 +146,6 @@ export class Sounds {
     for (let i = 0; i < 100; i++) {
       this.bools.push(true);
     }
-    Howler.volume(1);
-
     this.audio = this.createDialog("./sounds/audio.wav");
     this.dialog01 = this.createDialog("./sounds/dialog01.wav");
     this.dialog02 = this.createDialog("./sounds/dialog02.wav");
@@ -158,6 +157,7 @@ export class Sounds {
     this.animal12dialog = this.createDialog("./sounds/animal1dialog2.wav");
     this.animal21dialog = this.createDialog("./sounds/animal2dialog1.wav");
     this.animal22dialog = this.createDialog("./sounds/animal2dialog2.wav");
+    this.animal3dialog = this.createDialog("./sounds/animal3dialog.wav");
     this.animal3dialog04 = this.createDialog("./sounds/animal3dialog04.wav");
     this.animal3dialog05 = this.createDialog(
       "./sounds/animal3dialog05final.wav"
@@ -229,6 +229,8 @@ export class Sounds {
       this.animal21dialog,
       this.animal22dialog,
       this.animal3dialog,
+      this.animal3dialog04,
+      this.animal3dialog05,
     ];
 
     this.continueObjects = [
@@ -239,6 +241,8 @@ export class Sounds {
       this.animal2,
       this.animal3,
     ];
+
+    this.soundEffects = [];
   }
 
   openning() {
@@ -286,10 +290,12 @@ export class Sounds {
     if (this.bgm) {
       this.bgm.volume(0.05);
     }
-    this.dialogs[this.progress - 1].play();
+    this.progress--;
+    this.dialogs[this.progress].play();
   }
 
   playDialog() {
+    this.silenceTheNoise();
     var play: boolean =
       this.bools[this.progress] && this.dialogs[this.progress];
     for (let i = 0; i < this.dialogs.length; i++) {
@@ -301,10 +307,24 @@ export class Sounds {
 
     if (play) {
       if (this.bgm) {
-        this.bgm.volume(0.05);
+        this.bgm.volume(0.1);
       }
       this.dialogs[this.progress].play();
       this.bools[this.progress] = false;
+    }
+    this.normaliseTheNoise();
+  }
+
+  playDialogSpecific(sound: Howl) {
+    var play: boolean = true;
+    for (let i = 0; i < this.dialogs.length; i++) {
+      const sound = this.dialogs[i];
+      if (sound && sound.playing()) {
+        play = false;
+      }
+    }
+    if (play) {
+      sound.play();
     }
   }
 
@@ -317,7 +337,9 @@ export class Sounds {
       const element = this.soundEffects[i];
       element.volume(0.1);
     }
-    this.bgm.volume(0.1);
+    if (this.bgm) {
+      this.bgm.volume(0.04);
+    }
   }
 
   normaliseTheNoise() {
@@ -329,7 +351,9 @@ export class Sounds {
       const element = this.soundEffects[i];
       element.volume(0.6);
     }
-    this.bgm.volume(0.6);
+    if (this.bgm) {
+      this.bgm.volume(0.08);
+    }
   }
 
   async playOnGetFood() {

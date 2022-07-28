@@ -11,7 +11,6 @@ import { Animal } from "../objects/Animal";
 import { Sounds } from "../objects/Sounds";
 
 export class AdventureScene extends MapWithReader {
-  private initScene: boolean = false;
   constructor() {
     super("AdventureScene");
     this.allEvents = new AllEvents({});
@@ -57,9 +56,6 @@ export class AdventureScene extends MapWithReader {
 
   init(data: any): void {
     super.init(data);
-    if (data.init) {
-      this.initScene = data.init;
-    }
     this.allEvents.playSounds();
   }
 
@@ -71,13 +67,8 @@ export class AdventureScene extends MapWithReader {
 
   update(): void {
     super.update();
-    if (this.initScene) {
-      this.initScenePlay();
-      this.initScene = false;
-    }
+
   }
 
-  initScenePlay() {
-    Sounds.getInstance.animal11dialog.play();
-  }
+
 }

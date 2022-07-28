@@ -15,6 +15,17 @@ export function speak(msg: string) {
   window.speechSynthesis.speak(ssu);
 }
 
+export function addToSpeakList(msg: string) {
+  let ssu = new window.SpeechSynthesisUtterance();
+  ssu.voice = window.speechSynthesis.getVoices()[1];
+  ssu.lang = "en-US";
+  ssu.rate = 1.7;
+  ssu.text = msg;
+  ssu.volume = 0.3;
+  window.speechSynthesis.speak(ssu);
+}
+
+
 export class Reader extends Phaser.Scene {
   [x: string]: any;
   protected repeatKey: Phaser.Input.Keyboard.Key;

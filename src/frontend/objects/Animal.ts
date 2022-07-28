@@ -3,6 +3,7 @@ import { Player } from "./Player";
 import { Position } from "./Position";
 import { MapEvent, EventType } from "./MapEvent";
 import { delay, Sounds } from "./Sounds";
+import { animalOrMonsterProgress } from "./animalOrMonsterProgress";
 
 export class Animal extends MapEvent {
   static cpt: number = 0;
@@ -95,27 +96,13 @@ export class Animal extends MapEvent {
     this.stopSound();
     switch (this.id) {
       case 0:
-        Sounds.getInstance.animal12dialog.play();
-        await delay(Sounds.getInstance.animal12dialog.duration() * 1000);
-        setTimeout(() => {
-          Sounds.getInstance.animal21dialog.play();
-        }, 10000);
+        animalOrMonsterProgress.getInstance.changeToAnimal1();
         break;
       case 1:
-        Sounds.getInstance.animal22dialog.play();
-        await delay(Sounds.getInstance.animal22dialog.duration() * 1000);
+        animalOrMonsterProgress.getInstance.changeToAnimal2();
         break;
       case 2:
-        Sounds.getInstance.animal3dialog.play();
-        await delay(Sounds.getInstance.animal3dialog.duration() * 1000);
-        await delay(5000);
-        Sounds.getInstance.animal3dialog04.play();
-        await delay(Sounds.getInstance.animal3dialog04.duration() * 1000);
-        await delay(5000);
-        Sounds.getInstance.playOnGetFood();
-        await delay(500);
-        Sounds.getInstance.animal3dialog05.play();
-        await delay(Sounds.getInstance.animal3dialog05.duration() * 1000);
+        animalOrMonsterProgress.getInstance.changeToAnimal3();
         break;
       default:
         break;
