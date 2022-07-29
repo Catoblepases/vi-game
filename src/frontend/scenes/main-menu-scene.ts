@@ -2,9 +2,8 @@ import { CONST } from "../const/const";
 import { Player } from "../objects/Player";
 import { Sounds } from "../objects/Sounds";
 import { createTextAuto } from "../utils/createMenu";
-import { MenuReader} from "../utils/menu-reader";
+import { MenuReader } from "../utils/menu-reader";
 import { speak } from "../utils/reader";
-
 
 export class MainMenuScene extends MenuReader {
   private startKey: Phaser.Input.Keyboard.Key;
@@ -18,6 +17,7 @@ export class MainMenuScene extends MenuReader {
     this.startKey = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.S
     );
+    speak("Press Enter To Start The Game");
   }
 
   preload(): void {
@@ -32,6 +32,15 @@ export class MainMenuScene extends MenuReader {
         this.sys.canvas.height / 2 - 60,
         "sysFont",
         "HazeOfHodur",
+        16
+      )
+    );
+    this.bitmapTexts.push(
+      this.add.bitmapText(
+        this.sys.canvas.width / 2 - 70,
+        this.sys.canvas.height / 2 - 90,
+        "sysFont",
+        "Press Enter To Start The Game",
         16
       )
     );
