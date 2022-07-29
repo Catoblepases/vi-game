@@ -5,7 +5,7 @@
 <p align="center">Game for blind people (currently only work on PC with keyboard control)</p>
 <p align="center"><b>Uses Howler.js et Phaser.js</b></p>
 <p align="center"><a href="https://airtable.com/shrifmN4apGVFsUXg">vote for our project(eyevy)!</a></p>
-
+<p align="center"><a href="https://www.youtube.com/watch?v=VRncrCYyyqA">teaser video</a></p>
 <p align="center"><a href="https://agile-peak-94217.herokuapp.com/">live demo</a></p>
 
 
