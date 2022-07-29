@@ -48,6 +48,7 @@ export class Sounds {
   readonly attackInstraction: Howl;
   readonly meetMonster: Howl;
   readonly afterMonster: Howl;
+  readonly ending: Howl;
 
   //if there's different monster sound then use the other two additionals
   readonly monsterA: Howl;
@@ -64,6 +65,7 @@ export class Sounds {
   readonly animal3dialog: Howl;
   readonly animal3dialog04: Howl;
   readonly animal3dialog05: Howl;
+
 
   readonly hitSound: Howl;
   readonly ivyWoo: Howl;
@@ -201,6 +203,7 @@ export class Sounds {
     this.attackInstraction = this.createDialogOut(
       "./sounds/attackInstruction.wav"
     );
+    this.ending = this.createDialogOut("./sounds/ending.wav");
 
     this.adventureBgm = new Howl({
       src: ["./sounds/forest.mp3"],
@@ -262,6 +265,8 @@ export class Sounds {
       this.animal3dialog,
       this.animal3dialog04,
       this.animal3dialog05,
+      this.ending,
+
     ];
 
     this.continueObjects = [

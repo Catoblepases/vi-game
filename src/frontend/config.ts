@@ -9,6 +9,7 @@ import { checkPlatform } from "./utils/check-sys";
 import { Reader } from "./utils/reader";
 import { OpenScene } from "./scenes/opening-scene";
 import { TestScene } from "./scenes/test-scene";
+import { EndScene } from "./scenes/ending-scene";
 
 export const GameConfig: Phaser.Types.Core.GameConfig = {
   title: "RandomLand",
@@ -28,6 +29,7 @@ export const GameConfig: Phaser.Types.Core.GameConfig = {
     AdventureScene,
     EtherScene,
     OpenScene,
+    EndScene,
   ],
   input: {
     keyboard: true,

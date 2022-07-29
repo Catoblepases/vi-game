@@ -106,6 +106,7 @@ export class MapWithReader extends Reader {
         if (Sounds.getInstance.progress == 22) {
           Sounds.getInstance.changeToForest();
           animalOrMonsterProgress.getInstance.changeToNone();
+          this.scene.start('EndScene');
         } else {
           Sounds.getInstance.playDialog();
         }
