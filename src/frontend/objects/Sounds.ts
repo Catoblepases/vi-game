@@ -132,7 +132,7 @@ export class Sounds {
       src: [filename],
       volume: 0.3,
       loop: false,
-      rate: 2.5,
+      rate: 1,
       onplay: () => {
         console.log("progress: " + this.progress + " play " + filename);
         this.silenceTheNoise();
