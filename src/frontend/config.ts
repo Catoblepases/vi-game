@@ -12,7 +12,7 @@ import { TestScene } from "./scenes/test-scene";
 import { EndScene } from "./scenes/ending-scene";
 
 export const GameConfig: Phaser.Types.Core.GameConfig = {
-  title: "RandomLand",
+  title: "HazeOfHodur",
   url: "https://github.com/Catoblespases/vi-game",
   version: "2.0",
   width: 256,
@@ -48,12 +48,12 @@ export function setGameConfig(): Phaser.Types.Core.GameConfig {
   if (platform["isIos"] || platform["isAndroid"] || platform["isIphone"]) {
     config.height = 667;
     config.width = 375;
-    config.title = "RANDOMLAND(touch)";
+    config.title = "HazeOfHodur(touch)";
   } else {
     if (platform["isIpad"]) {
-      config.title = "RANDOMLAND(touch)";
+      config.title = "HazeOfHodur(touch)";
     } else {
-      config.title = "RANDOMLAND(pc)";
+      config.title = "HazeOfHodur(pc)";
     }
     config.height = 720;
     config.width = 1280;

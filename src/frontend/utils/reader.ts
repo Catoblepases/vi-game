@@ -9,7 +9,7 @@ export function speak(msg: string) {
   let ssu = new window.SpeechSynthesisUtterance();
   ssu.voice = window.speechSynthesis.getVoices()[1];
   ssu.lang = "en-US";
-  ssu.rate = 1.7;
+  ssu.rate = 1.5;
   ssu.text = msg;
   ssu.volume = 0.3;
   window.speechSynthesis.speak(ssu);

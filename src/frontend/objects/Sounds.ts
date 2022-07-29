@@ -114,7 +114,7 @@ export class Sounds {
       src: [filename],
       volume: 0.3,
       loop: false,
-      rate: 2,
+      rate: 1,
       onplay: () => {
         animalOrMonsterProgress.getInstance.SyncProgress();
         console.log("progress: " + this.progress + " play " + filename);

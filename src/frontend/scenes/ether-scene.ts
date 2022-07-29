@@ -32,7 +32,7 @@ export class EtherScene extends MenuReader {
         this.sys.canvas.width / 2 - 70,
         this.sys.canvas.height / 2 - 60,
         "sysFont",
-        "RANDOMLAND",
+        "HazeOfHodur",
         16
       )
     );
