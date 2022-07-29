@@ -41,7 +41,7 @@ export class MainMenuScene extends MenuReader {
         this.sys.canvas.height / 2 - 90,
         "sysFont",
         "Press Enter To Start The Game",
-        16
+        10
       )
     );
     createTextAuto(this);
