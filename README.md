@@ -1,5 +1,3 @@
-[![logo](https://s3.amazonaws.com/howler.js/howler-logo.png "howler.js")](https://agile-peak-94217.herokuapp.com/)
-
 <h1 align="center">Haze of Hodur</h1>
 <p align="center"><b>Team name : Eyevy/Different ability</b></p>
 <p align="center">Game for blind people (currently only work on PC with keyboard control)</p>
