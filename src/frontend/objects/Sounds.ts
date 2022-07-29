@@ -66,7 +66,6 @@ export class Sounds {
   readonly animal3dialog04: Howl;
   readonly animal3dialog05: Howl;
 
-
   readonly hitSound: Howl;
   readonly ivyWoo: Howl;
   readonly sucessSound: Howl;
@@ -86,8 +85,8 @@ export class Sounds {
       return;
     }
     return new Position(
-      (-1 * evtPos.x + playPos.x) * CONST.SOUND_DISTANCE_MULTIPLIER,
-      (-1 * evtPos.y + playPos.y) * CONST.SOUND_DISTANCE_MULTIPLIER
+      (evtPos.x - playPos.x) * CONST.SOUND_DISTANCE_MULTIPLIER,
+      (evtPos.y - playPos.y) * CONST.SOUND_DISTANCE_MULTIPLIER
     );
   }
 
@@ -266,7 +265,6 @@ export class Sounds {
       this.animal3dialog04,
       this.animal3dialog05,
       this.ending,
-
     ];
 
     this.continueObjects = [
