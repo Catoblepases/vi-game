@@ -1,8 +1,10 @@
 [![logo](https://s3.amazonaws.com/howler.js/howler-logo.png "howler.js")](https://agile-peak-94217.herokuapp.com/)
 
 <h1 align="center">Random Land</h1>
+<p align="center"><b>Team name : Eyevy/Different ability</b></p>
 <p align="center">Game for blind people</p>
 <p align="center"><b>Uses Howler.js et Phaser.js</b></p>
+<p align="center"><a href="https://airtable.com/shrifmN4apGVFsUXg">vote for our project(eyevy)!</a></p>
 
 <p align="center"><a href="https://agile-peak-94217.herokuapp.com/">live demo</a></p>
 
@@ -13,7 +15,7 @@ But after a certain day, the devil took away the magical power of the magicians,
 ## Live Demos
 https://agile-peak-94217.herokuapp.com/
 
-If no one is on, it takes a few seconds for the free server to spin up. The demo shows a new square per user and sync the location of all users. No player controls yet.
+If no one is on, it takes a few seconds for the free server to spin up. 
 
 ## Requirements
 node12+
